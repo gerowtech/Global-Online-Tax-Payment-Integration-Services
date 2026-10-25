@@ -1,454 +1,486 @@
-# Global Online Tax Integration
+# Pakistan FBR Digital Invoicing API — PHP Example
 
-**GEROW TECH — Online Tax Payment, Tax Reporting, and E-Invoicing Integrations**
+A PHP cURL example for integrating with Pakistan's Federal Board of Revenue (FBR) Digital Invoicing API. This README demonstrates the request structure, Bearer-token authentication, invoice validation, invoice submission, and response handling.
 
-A reference directory for integrating business applications with government tax portals, electronic tax filing services, tax payment systems, and e-invoicing platforms around the world.
+> **Important:** API endpoints, payload schemas, reference values, credentials, and integration requirements can change. Confirm the current specification and your authorized integration configuration with FBR/PRAL before testing or deploying. The payload below is an illustrative template, not a guaranteed production-ready invoice.
 
-## Overview
+## Official Documentation
 
-This repository catalogs official online tax services and e-invoicing systems that may be relevant when building tax integrations for:
+- [FBR Digital Invoicing Technical Documentation](https://www.fbr.gov.pk/technical-documentation-di/163085/173959)
+- [FBR Digital Invoicing Technical Assistance](https://fbr.gov.pk/di-technical-assistance/173967/173970)
+- [FBR Digital Invoicing FAQs](https://www.fbr.gov.pk/faqs/173967/173969)
 
-- Enterprise Resource Planning (ERP) systems
-- Point of Sale (POS) software
-- Accounting and billing applications
-- eCommerce platforms
-- Customer Relationship Management (CRM) systems
-- Subscription billing platforms
-- Financial management applications
-- Multi-country SaaS products
+## Requirements
 
-> **Important distinction:** Online tax payment, electronic tax filing, tax reporting, tax calculation, and e-invoicing are different capabilities. A government portal may support online transactions without offering a public API for third-party automation.
+- PHP 8.0 or later
+- PHP cURL extension enabled
+- An FBR/PRAL-authorized integration and valid Bearer token
+- Access to the relevant sandbox or production environment
 
-## Integration Categories
+Check PHP and cURL:
 
-| Category | Description |
-|---|---|
-| Online tax payment | Initiate or reconcile tax payments through officially supported channels. |
-| Electronic tax filing | Prepare or submit tax returns using an authorized service or supported API. |
-| E-invoicing | Generate, validate, transmit, and track structured electronic invoice records. |
-| VAT / GST reporting | Support applicable value-added tax or goods and services tax reporting. |
-| Sales tax | Calculate and report applicable national, state, provincial, or local sales taxes. |
-| Taxpayer verification | Verify taxpayer details where an official verification service is available. |
-| Payment confirmation | Retrieve or reconcile payment references and receipts where supported. |
-| Compliance records | Retain invoice records, authority responses, and audit logs. |
-
-## Country-Wise Tax Systems
-
-The following table is a starting directory of official portals. The listed portal is not necessarily a public API endpoint, and the presence of an e-invoicing system does not mean that automated tax payment is available.
-
-### Asia
-
-| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
-|---|---|---|---|---|
-| Pakistan | Federal Board of Revenue (FBR) | IRIS / FBR e-Payment services | FBR Digital Invoicing, where applicable | [fbr.gov.pk](https://www.fbr.gov.pk/) |
-| India | GST and Income Tax authorities | GST Portal / Income Tax e-Filing | GST Invoice Registration Portal (IRP), where applicable | [gst.gov.in](https://www.gst.gov.in/) |
-| Malaysia | Inland Revenue Board of Malaysia (LHDN) | MyTax | MyInvois | [hasil.gov.my](https://www.hasil.gov.my/) |
-| Singapore | Inland Revenue Authority of Singapore (IRAS) | myTax Portal | InvoiceNow / Peppol ecosystem | [iras.gov.sg](https://www.iras.gov.sg/) |
-| Indonesia | Directorate General of Taxes | Coretax DJP and official tax services | Applicable electronic tax invoice systems | [pajak.go.id](https://www.pajak.go.id/) |
-| Thailand | Revenue Department | e-Filing and online tax services | Electronic Tax Invoice & e-Receipt, where applicable | [rd.go.th](https://www.rd.go.th/) |
-| Vietnam | Tax authority | Official electronic tax services | Electronic invoice system | [gdt.gov.vn](https://www.gdt.gov.vn/) |
-| Philippines | Bureau of Internal Revenue (BIR) | BIR eServices | Applicable electronic invoicing and reporting systems | [bir.gov.ph](https://www.bir.gov.ph/) |
-| Japan | National Tax Agency | e-Tax | Qualified Invoice System and electronic tax filing | [nta.go.jp](https://www.nta.go.jp/) |
-| South Korea | National Tax Service | Hometax | Electronic tax invoice system | [nts.go.kr](https://www.nts.go.kr/) |
-| China | State Taxation Administration | Official electronic tax services | Electronic invoice systems | [chinatax.gov.cn](https://www.chinatax.gov.cn/) |
-| Taiwan | Ministry of Finance | Official tax services | Government electronic invoice platform | [mof.gov.tw](https://www.mof.gov.tw/) |
-
-### Middle East
-
-| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
-|---|---|---|---|---|
-| Saudi Arabia | Zakat, Tax and Customs Authority (ZATCA) | ZATCA e-Services | FATOORA e-invoicing | [zatca.gov.sa](https://zatca.gov.sa/) |
-| United Arab Emirates | Federal Tax Authority (FTA) | EmaraTax | UAE e-invoicing framework | [tax.gov.ae](https://tax.gov.ae/) |
-| Bahrain | National Bureau for Revenue | NBR eServices | Check applicable invoicing requirements | [nbr.gov.bh](https://www.nbr.gov.bh/) |
-| Oman | Oman Tax Authority | Tax Authority eServices | Check applicable electronic tax requirements | [taxoman.gov.om](https://taxoman.gov.om/) |
-| Qatar | General Tax Authority | Dhareeba | Check applicable electronic tax services | [gta.gov.qa](https://gta.gov.qa/) |
-| Kuwait | Ministry of Finance / relevant authorities | Official government tax services | Verify applicable systems and requirements | [mof.gov.kw](https://www.mof.gov.kw/) |
-| Jordan | Income and Sales Tax Department | ISTD eServices | JoFotara electronic invoicing system | [istd.gov.jo](https://istd.gov.jo/) |
-
-### Europe
-
-| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
-|---|---|---|---|---|
-| Italy | Agenzia delle Entrate | Official tax services | Sistema di Interscambio (SdI) | [agenziaentrate.gov.it](https://www.agenziaentrate.gov.it/) |
-| Germany | Relevant federal and state tax authorities | ELSTER | XRechnung / ZUGFeRD and applicable exchange channels | [elster.de](https://www.elster.de/) |
-| Spain | Agencia Estatal de Administración Tributaria (AEAT) | Sede Electrónica | VERI*FACTU / applicable invoicing requirements | [sede.agenciatributaria.gob.es](https://sede.agenciatributaria.gob.es/) |
-| France | Direction générale des Finances publiques (DGFiP) | impots.gouv.fr | French e-invoicing and e-reporting framework | [impots.gouv.fr](https://www.impots.gouv.fr/) |
-| Netherlands | Belastingdienst | Mijn Belastingdienst | Peppol and applicable invoice exchange systems | [belastingdienst.nl](https://www.belastingdienst.nl/) |
-| Sweden | Swedish Tax Agency | Skatteverket e-services | Peppol and applicable invoice formats | [skatteverket.se](https://www.skatteverket.se/) |
-| Belgium | FPS Finance | MyMinfin | Peppol-based structured invoicing for applicable transactions | [financien.belgium.be](https://financien.belgium.be/) |
-| Poland | National Revenue Administration | e-Urząd Skarbowy | Krajowy System e-Faktur (KSeF) | [podatki.gov.pl](https://www.podatki.gov.pl/) |
-| Portugal | Autoridade Tributária e Aduaneira | Portal das Finanças | Certified invoicing and applicable reporting | [portaldasfinancas.gov.pt](https://www.portaldasfinancas.gov.pt/) |
-| Romania | National Agency for Fiscal Administration | SPV | RO e-Factura | [anaf.ro](https://www.anaf.ro/) |
-| Greece | Independent Authority for Public Revenue | myAADE | myDATA | [aade.gr](https://www.aade.gr/) |
-| Denmark | Danish Tax Agency | TastSelv | Applicable digital bookkeeping and invoice systems | [skat.dk](https://skat.dk/) |
-| Finland | Finnish Tax Administration | MyTax | Finvoice / Peppol and applicable systems | [vero.fi](https://www.vero.fi/) |
-| Norway | Norwegian Tax Administration | Official tax services / Altinn services | EHF / Peppol | [skatteetaten.no](https://www.skatteetaten.no/) |
-| Austria | Federal Ministry of Finance | FinanzOnline | Applicable structured e-invoice systems | [bmf.gv.at](https://www.bmf.gv.at/) |
-| Ireland | Revenue Commissioners | Revenue Online Service (ROS) | Applicable electronic invoicing and reporting arrangements | [revenue.ie](https://www.revenue.ie/) |
-| United Kingdom | HM Revenue & Customs (HMRC) | HMRC online services | Making Tax Digital and applicable invoicing arrangements | [gov.uk/hmrc](https://www.gov.uk/government/organisations/hm-revenue-customs) |
-| Switzerland | Federal Tax Administration | Official federal tax services | Applicable invoice formats and networks | [estv.admin.ch](https://www.estv.admin.ch/) |
-
-### Africa
-
-| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
-|---|---|---|---|---|
-| South Africa | South African Revenue Service (SARS) | eFiling | Applicable electronic tax reporting systems | [sars.gov.za](https://www.sars.gov.za/) |
-| Kenya | Kenya Revenue Authority (KRA) | iTax | eTIMS | [kra.go.ke](https://www.kra.go.ke/) |
-| Nigeria | Relevant federal and state tax authorities | Official tax services | Verify current e-invoicing and reporting requirements | [firs.gov.ng](https://www.firs.gov.ng/) |
-| Egypt | Egyptian Tax Authority | ETA e-services | Electronic invoicing and electronic receipt systems | [eta.gov.eg](https://www.eta.gov.eg/) |
-| Morocco | Direction Générale des Impôts | SIMPL and official services | Verify applicable electronic tax services | [tax.gov.ma](https://www.tax.gov.ma/) |
-| Rwanda | Rwanda Revenue Authority | Online tax services | EBM fiscal systems | [rra.gov.rw](https://www.rra.gov.rw/) |
-| Uganda | Uganda Revenue Authority | URA e-services | EFRIS | [ura.go.ug](https://www.ura.go.ug/) |
-| Tanzania | Tanzania Revenue Authority | TRA online services | Electronic fiscal devices and applicable systems | [tra.go.tz](https://www.tra.go.tz/) |
-
-### North America
-
-| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
-|---|---|---|---|---|
-| United States | Internal Revenue Service (IRS) and state/local authorities | IRS and state tax portals | State- and transaction-specific requirements | [irs.gov](https://www.irs.gov/) |
-| Canada | Canada Revenue Agency (CRA) and provincial authorities | My Business Account | GST/HST and applicable provincial requirements | [canada.ca/cra](https://www.canada.ca/en/revenue-agency.html) |
-| Mexico | Servicio de Administración Tributaria (SAT) | SAT Portal | CFDI electronic invoicing | [sat.gob.mx](https://www.sat.gob.mx/) |
-
-### South America
-
-| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
-|---|---|---|---|---|
-| Brazil | Receita Federal and state/municipal authorities | e-CAC and applicable portals | NF-e / NFS-e | [gov.br/receitafederal](https://www.gov.br/receitafederal/) |
-| Argentina | Agencia de Recaudación y Control Aduanero (ARCA) | Official tax services | Electronic invoicing | [arca.gob.ar](https://www.arca.gob.ar/) |
-| Chile | Servicio de Impuestos Internos (SII) | SII Online | DTE electronic tax documents | [sii.cl](https://www.sii.cl/) |
-| Colombia | Dirección de Impuestos y Aduanas Nacionales (DIAN) | DIAN Online | Electronic invoicing | [dian.gov.co](https://www.dian.gov.co/) |
-| Peru | SUNAT | SUNAT Online | Electronic invoicing | [sunat.gob.pe](https://www.sunat.gob.pe/) |
-| Uruguay | Dirección General Impositiva (DGI) | DGI Online | Electronic invoicing (CFE) | [gub.uy/dgi](https://www.gub.uy/direccion-general-impositiva/) |
-| Ecuador | Servicio de Rentas Internas (SRI) | SRI Online | Electronic invoicing | [sri.gob.ec](https://www.sri.gob.ec/) |
-
-### Oceania
-
-| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
-|---|---|---|---|---|
-| Australia | Australian Taxation Office (ATO) | Online services for business | Peppol eInvoicing | [ato.gov.au](https://www.ato.gov.au/) |
-| New Zealand | Inland Revenue | myIR | Peppol eInvoicing | [ird.govt.nz](https://www.ird.govt.nz/) |
-| Fiji | Fiji Revenue and Customs Service (FRCS) | FRCS online tax services | Verify applicable electronic tax requirements | [frcs.org.fj](https://www.frcs.org.fj/) |
-
-## E-Invoicing Integration Providers
-
-These commercial providers and networks may help connect business applications to supported country systems. Coverage, licensing, supported workflows, and pricing must be checked for each target country.
-
-| Provider | Integration Focus | Official Website |
-|---|---|---|
-| Sovos | Global tax compliance and e-invoicing | [sovos.com](https://sovos.com/) |
-| Avalara | Tax compliance and e-invoicing | [avalara.com](https://www.avalara.com/) |
-| Thomson Reuters Pagero | Global invoice exchange and compliance | [pagero.com](https://www.pagero.com/) |
-| Taxilla | E-invoicing API integration | [taxilla.com](https://www.taxilla.com/) |
-| Complyance | Multi-country e-invoicing solutions | [complyance.io](https://complyance.io/) |
-| OpenPeppol | Peppol network and interoperability resources | [peppol.org](https://peppol.org/) |
-
-## API Integration and Developer Access
-
-GEROW TECH can use this directory as a starting point for connecting ERP, POS, accounting, billing, and eCommerce platforms with supported tax and e-invoicing services.
-
-| API Integration Area | Purpose | Important Notes |
-|---|---|---|
-| Tax authority APIs | Submit or retrieve tax data where officially supported | Confirm API availability, eligibility, and authorization with the relevant authority. |
-| E-invoicing APIs | Validate, submit, and track electronic invoices | Country-specific formats, certificates, and clearance rules may apply. |
-| Tax calculation APIs | Calculate taxes based on jurisdiction and transaction details | Use a reputable provider or verified official service; maintain effective dates for tax rules. |
-| Tax payment APIs | Initiate or reconcile payments where supported | Do not assume a portal provides a public payment API. Payment services may require a bank or licensed provider. |
-| Taxpayer verification APIs | Verify taxpayer or VAT/GST registration details | Check access restrictions, rate limits, and permitted use. |
-| Webhooks and status APIs | Receive submission updates and reconcile outcomes | Verify webhook signatures, implement retries, and make processing idempotent. |
-
-### API Integration Workflow
-
-1. Select the country and identify the responsible tax authority.
-2. Visit the authority's official website listed above and locate its current API, developer, or e-invoicing technical documentation.
-3. Confirm business eligibility, registration requirements, credentials, certificates, and sandbox access.
-4. Implement a country-specific adapter behind a unified internal API.
-5. Validate payloads against the authority's current schema before submission.
-6. Store request identifiers, authority responses, timestamps, and status history securely.
-7. Test duplicate handling, retries, timeouts, token expiry, and reconciliation in a test environment.
-8. Recheck official documentation and compliance requirements before production deployment.
-
-**Important:** The official website links in this README are starting points, not direct API endpoint URLs. API availability and access methods vary by country; some services use accredited providers, certified software, private partner APIs, or manual portal workflows instead of public APIs. Do not automate a portal or use undocumented endpoints without authorization.
-
-## API Code Examples
-
-The following examples show a provider-neutral pattern for connecting your application to a tax or e-invoicing API. Replace the placeholder URL, endpoint, payload, and authentication method with values from the selected authority's official API documentation. These examples are templates, not working country-specific endpoints.
-
-### 1. Environment Configuration
-
-Create a `.env` file (do not commit it to Git):
-
-```env
-TAX_API_BASE_URL=https://api.example.gov
-TAX_API_TOKEN=replace_with_your_secret_token
-TAX_API_TIMEOUT_MS=15000
+```bash
+php -v
+php -m
 ```
 
-Add `.env` to `.gitignore`:
+Ensure `curl` appears in the PHP module list.
+
+## API Endpoints
+
+The following endpoint patterns are commonly documented for FBR Digital Invoicing. Confirm them against the current official documentation and your integration onboarding details.
+
+| Operation | Environment | Method | Endpoint |
+|---|---|---|---|
+| Validate invoice | Sandbox | POST | `https://gw.fbr.gov.pk/di_data/v1/di/validateinvoicedata_sb` |
+| Submit invoice | Sandbox | POST | `https://gw.fbr.gov.pk/di_data/v1/di/postinvoicedata_sb` |
+| Validate invoice | Production | POST | `https://gw.fbr.gov.pk/di_data/v1/di/validateinvoicedata` |
+| Submit invoice | Production | POST | `https://gw.fbr.gov.pk/di_data/v1/di/postinvoicedata` |
+
+## Authentication
+
+FBR API requests use a Bearer token in the `Authorization` header.
+
+Set the token in your server environment rather than hard-coding it:
+
+```bash
+# Linux/macOS example for the current shell
+export FBR_API_TOKEN="YOUR_AUTHORIZED_FBR_TOKEN"
+export FBR_ENVIRONMENT="sandbox"
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:FBR_API_TOKEN = "YOUR_AUTHORIZED_FBR_TOKEN"
+$env:FBR_ENVIRONMENT = "sandbox"
+```
+
+Never commit credentials to Git or expose them in frontend JavaScript.
+
+## Project Structure
+
+```text
+fbr-php-example/
+├── FbrDigitalInvoicing.php
+├── example.php
+├── .gitignore
+└── README.md
+```
+
+Suggested `.gitignore`:
 
 ```gitignore
 .env
 .env.*
 !.env.example
+vendor/
 ```
 
-### 2. Node.js API Client (Fetch)
+## 1. PHP API Client
 
-Requires Node.js 18 or later. This example submits an invoice to a placeholder endpoint.
+Create `FbrDigitalInvoicing.php`:
 
-```javascript
-const baseUrl = process.env.TAX_API_BASE_URL;
-const apiToken = process.env.TAX_API_TOKEN;
-const timeoutMs = Number(process.env.TAX_API_TIMEOUT_MS || 15000);
+```php
+<?php
 
-async function submitInvoice(invoice) {
-  if (!baseUrl || !apiToken) {
-    throw new Error("Tax API configuration is missing");
-  }
+declare(strict_types=1);
 
-  const url = new URL("/v1/invoices", baseUrl);
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+final class FbrDigitalInvoicing
+{
+    private string $token;
+    private string $environment;
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiToken}`,
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(invoice),
-      signal: controller.signal
-    });
+    private const BASE_URL = 'https://gw.fbr.gov.pk/di_data/v1/di/';
 
-    const responseText = await response.text();
-    let result;
-
-    try {
-      result = responseText ? JSON.parse(responseText) : {};
-    } catch {
-      result = { message: responseText };
-    }
-
-    if (!response.ok) {
-      const error = new Error(`Tax API request failed: HTTP ${response.status}`);
-      error.status = response.status;
-      error.details = result;
-      throw error;
-    }
-
-    return result;
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-// Example only — use the schema required by your tax authority.
-const invoice = {
-  invoiceNumber: "INV-10001",
-  issueDate: "2026-10-25",
-  currency: "EUR",
-  seller: { taxId: "SELLER_TAX_ID" },
-  buyer: { taxId: "BUYER_TAX_ID" },
-  lines: [
+    public function __construct(string $token, string $environment = 'sandbox')
     {
-      description: "Software services",
-      quantity: 1,
-      unitPrice: 100,
-      taxRate: 20
+        if (trim($token) === '') {
+            throw new InvalidArgumentException('FBR API token is required.');
+        }
+
+        if (!in_array($environment, ['sandbox', 'production'], true)) {
+            throw new InvalidArgumentException(
+                'Environment must be sandbox or production.'
+            );
+        }
+
+        $this->token = $token;
+        $this->environment = $environment;
     }
-  ]
-};
 
-submitInvoice(invoice)
-  .then((result) => console.log("Submission result:", result))
-  .catch((error) => {
-    // Avoid logging tokens or unnecessary personal/tax data.
-    console.error(error.message, error.status || "");
-  });
+    private function request(string $operation, array $invoice): array
+    {
+        $allowedOperations = [
+            'validateinvoicedata',
+            'postinvoicedata',
+        ];
+
+        if (!in_array($operation, $allowedOperations, true)) {
+            throw new InvalidArgumentException('Invalid FBR API operation.');
+        }
+
+        $suffix = $this->environment === 'sandbox' ? '_sb' : '';
+        $url = self::BASE_URL . $operation . $suffix;
+        $payload = json_encode($invoice, JSON_THROW_ON_ERROR);
+
+        $ch = curl_init($url);
+
+        if ($ch === false) {
+            throw new RuntimeException('Unable to initialize cURL.');
+        }
+
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $payload,
+            CURLOPT_HTTPHEADER => [
+                'Authorization: Bearer ' . $this->token,
+                'Content-Type: application/json',
+                'Accept: application/json',
+            ],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
+        ]);
+
+        $body = curl_exec($ch);
+        $httpStatus = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curlError = curl_error($ch);
+        curl_close($ch);
+
+        if ($body === false) {
+            throw new RuntimeException('FBR connection failed: ' . $curlError);
+        }
+
+        $decoded = json_decode($body, true);
+
+        if (!is_array($decoded)) {
+            throw new RuntimeException(
+                'FBR returned a non-JSON response. HTTP status: ' . $httpStatus
+            );
+        }
+
+        if ($httpStatus < 200 || $httpStatus >= 300) {
+            // In production, log a redacted response and request/correlation ID.
+            throw new RuntimeException(
+                'FBR API returned HTTP ' . $httpStatus . ': ' . $body
+            );
+        }
+
+        return $decoded;
+    }
+
+    public function validateInvoice(array $invoice): array
+    {
+        return $this->request('validateinvoicedata', $invoice);
+    }
+
+    public function submitInvoice(array $invoice): array
+    {
+        return $this->request('postinvoicedata', $invoice);
+    }
+}
 ```
 
-### 3. Express.js Internal Endpoint
+## 2. Invoice Request Example
 
-Use your own authenticated backend endpoint so browser clients never receive the tax authority's secret token.
+Create `example.php`:
 
-```javascript
-import express from "express";
-import { submitInvoice } from "./taxApiClient.js";
-import { requireAuth } from "./middleware/requireAuth.js";
+```php
+<?php
 
-const app = express();
-app.use(express.json({ limit: "1mb" }));
+require_once __DIR__ . '/FbrDigitalInvoicing.php';
 
-app.post("/api/tax/invoices", requireAuth, async (req, res) => {
-  try {
-    // Validate req.body against your invoice schema before sending it upstream.
-    const result = await submitInvoice(req.body);
-    res.status(200).json({ success: true, data: result });
-  } catch (error) {
-    const status = error.status && error.status >= 400 && error.status < 500
-      ? 502
-      : 502;
+$token = getenv('FBR_API_TOKEN') ?: '';
+$environment = getenv('FBR_ENVIRONMENT') ?: 'sandbox';
 
-    res.status(status).json({
-      success: false,
-      message: "Invoice submission failed. Check the submission status before retrying."
-    });
-  }
-});
+$fbr = new FbrDigitalInvoicing($token, $environment);
 
-app.listen(process.env.PORT || 3000);
+// Illustrative request only. Replace values and verify every field
+// against the current FBR/PRAL invoice schema and reference data.
+$invoice = [
+    'invoiceType' => 'Sale Invoice',
+    'invoiceDate' => date('Y-m-d'),
+    'sellerNTNCNIC' => 'YOUR_SELLER_NTN_OR_CNIC',
+    'sellerBusinessName' => 'Your Registered Business Name',
+    'sellerProvince' => 'Punjab',
+    'sellerAddress' => 'Lahore, Pakistan',
+    'buyerNTNCNIC' => 'BUYER_NTN_OR_CNIC',
+    'buyerBusinessName' => 'Buyer Business Name',
+    'buyerProvince' => 'Punjab',
+    'buyerAddress' => 'Lahore, Pakistan',
+    'buyerRegistrationType' => 'Registered',
+    'invoiceRefNo' => '',
+    'scenarioId' => 'SN001',
+    'items' => [
+        [
+            'hsCode' => '0101.2100',
+            'productDescription' => 'Example product',
+            'rate' => '18%',
+            'uoM' => 'Numbers, pieces, units',
+            'quantity' => 1,
+            'totalValues' => 1180.00,
+            'valueSalesExcludingST' => 1000.00,
+            'fixedNotifiedValueOrRetailPrice' => 0.00,
+            'salesTaxApplicable' => 180.00,
+            'salesTaxWithheldAtSource' => 0.00,
+            'extraTax' => 0.00,
+            'furtherTax' => 0.00,
+            'sroScheduleNo' => '',
+            'fedPayable' => 0.00,
+            'discount' => 0.00,
+            'saleType' => 'Goods at standard rate (default)',
+            'sroItemSerialNo' => '',
+        ],
+    ],
+];
+
+try {
+    // First validate the invoice.
+    $validation = $fbr->validateInvoice($invoice);
+
+    echo "Validation response:\n";
+    echo json_encode(
+        $validation,
+        JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+    ) . PHP_EOL;
+
+    // Check the real response fields according to the current API schema.
+    $validationResponse = $validation['validationResponse'] ?? [];
+    $status = strtolower((string) ($validationResponse['status'] ?? ''));
+    $statusCode = (string) ($validationResponse['statusCode'] ?? '');
+
+    if ($status === 'valid' && $statusCode === '00') {
+        echo "Validation succeeded.\n";
+
+        // Submit only when the validation response confirms acceptance.
+        // Uncomment after confirming the payload and integration settings:
+        //
+        // $submission = $fbr->submitInvoice($invoice);
+        // echo json_encode(
+        //     $submission,
+        //     JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+        // ) . PHP_EOL;
+    } else {
+        echo "Invoice validation did not return a confirmed valid status.\n";
+    }
+} catch (Throwable $e) {
+    // Do not print secrets or sensitive taxpayer/customer data to users.
+    error_log($e->getMessage());
+    http_response_code(500);
+    echo "FBR request failed. Check the server logs.";
+}
 ```
 
-In a real project, export `submitInvoice` from a dedicated module, validate input with a schema library, apply rate limits, and persist submission status. Add idempotency keys if the authority supports them, so retries do not create duplicate invoices.
+### Before using the sample payload
 
-### 4. cURL Request
+- Replace sample taxpayer information with valid registered information.
+- Use the current official schema for every required field.
+- Get valid HS codes, units of measurement, sale types, tax rates, and scenario IDs from the appropriate official reference data.
+- Do not assume the illustrative tax rate or product code is appropriate for your transaction.
+- Do not submit an invoice to production until it has been tested and approved for your integration.
 
-```bash
-curl --request POST "${TAX_API_BASE_URL}/v1/invoices" \
-  --header "Authorization: Bearer ${TAX_API_TOKEN}" \
-  --header "Content-Type: application/json" \
-  --header "Accept: application/json" \
-  --data '{
-    "invoiceNumber": "INV-10001",
-    "issueDate": "2026-10-25",
-    "currency": "EUR",
-    "lines": [
+## 3. Example Validation Response
+
+A successful validation response may have a structure similar to this. Exact fields and values depend on the API operation and current specification.
+
+```json
+{
+  "validationResponse": {
+    "statusCode": "00",
+    "status": "Valid",
+    "error": "",
+    "invoiceStatuses": [
       {
-        "description": "Software services",
-        "quantity": 1,
-        "unitPrice": 100,
-        "taxRate": 20
+        "itemSNo": "1",
+        "statusCode": "00",
+        "status": "Valid",
+        "invoiceNo": "",
+        "errorCode": "",
+        "error": ""
       }
     ]
-  }'
+  }
+}
 ```
 
-### 5. Suggested Unified Internal API
+## 4. Example Submission Response
 
-A country-neutral application could expose these internal routes:
+A successful invoice-submission response may include an FBR-assigned invoice number and validation information. This is an illustrative response, not a real invoice.
 
-| Method | Internal Route | Purpose |
-|---|---|---|
-| `GET` | `/api/tax/countries` | List supported country integrations |
-| `GET` | `/api/tax/providers?country=XX` | List configured providers for a country |
-| `POST` | `/api/tax/calculate` | Calculate tax using configured rules or a tax provider |
-| `POST` | `/api/tax/invoices` | Submit an invoice to the configured provider |
-| `GET` | `/api/tax/invoices/:id` | Retrieve stored invoice/submission status |
-| `POST` | `/api/tax/filings` | Start a supported tax-filing workflow |
-| `GET` | `/api/tax/filings/:id` | Check filing status |
-| `POST` | `/api/tax/webhooks/:provider` | Receive provider callbacks after signature verification |
-
-These are proposed routes for GEROW TECH's own backend, not official government endpoints.
-
-### Implementation and Security Checklist
-
-- Keep API tokens, client secrets, private keys, and certificates on the server.
-- Use the provider's documented OAuth2, mutual TLS, certificate, or other required authentication method.
-- Validate invoice fields and country-specific schemas before submission.
-- Use TLS, request timeouts, safe retry policies, and idempotency where supported.
-- Verify webhook signatures and prevent replay attacks.
-- Store audit logs and submission references while minimizing sensitive tax and personal data.
-- Never treat a request as successful until the authority/provider response confirms the required status.
-- Test only with official sandbox credentials before production use.
-
-## Suggested Architecture
-
-```text
-ERP / POS / Accounting / eCommerce / SaaS
-                    |
-                    v
-          Unified Tax Integration API
-                    |
-                    v
-      Tax Calculation and Data Validation
-                    |
-                    v
-        Country / Jurisdiction Router
-                    |
-          +---------+---------+
-          |         |         |
-          v         v         v
-       Tax API   E-Invoice   Payment
-       / Portal   Network    Channel
-          |         |         |
-          +---------+---------+
-                    |
-                    v
-       Response, Status and Reconciliation
-                    |
-                    v
-         Audit Logs and Document Archive
+```json
+{
+  "invoiceNumber": "FBR_ASSIGNED_INVOICE_NUMBER",
+  "dated": "2026-10-26 12:30:00",
+  "validationResponse": {
+    "statusCode": "00",
+    "status": "Valid",
+    "error": "",
+    "invoiceStatuses": [
+      {
+        "itemSNo": "1",
+        "statusCode": "00",
+        "status": "Valid",
+        "invoiceNo": "FBR_ASSIGNED_INVOICE_NUMBER-1",
+        "errorCode": "",
+        "error": ""
+      }
+    ]
+  }
+}
 ```
 
-## Recommended Technology Stack
+## 5. Example Error Response
 
-| Component | Suggested Technology |
-|---|---|
-| Frontend | React.js / Next.js |
-| Backend | Node.js / Express.js or Java Spring Boot |
-| Database | PostgreSQL |
-| Background processing | Redis / BullMQ or equivalent |
-| API formats | REST, JSON, XML, UBL, country-specific schemas |
-| Authentication | OAuth 2.0 or authority-specific authentication |
-| Document storage | Amazon S3 or compatible secure object storage |
-| Notifications | Webhooks and email |
-| Monitoring | Structured logs, alerts, retries, and error tracking |
+An invalid invoice may return field or item-level validation errors. The following is only an illustrative shape; use the current official schema to parse real responses.
 
-## Suggested Database Tables
+```json
+{
+  "validationResponse": {
+    "statusCode": "01",
+    "status": "Invalid",
+    "error": "Invoice validation failed",
+    "invoiceStatuses": [
+      {
+        "itemSNo": "1",
+        "statusCode": "01",
+        "status": "Invalid",
+        "invoiceNo": "",
+        "errorCode": "INVALID_FIELD",
+        "error": "Check the submitted invoice fields."
+      }
+    ]
+  }
+}
+```
 
-| Table | Purpose |
-|---|---|
-| `countries` | Country names, ISO codes, and jurisdiction metadata |
-| `tax_authorities` | Government tax authority details |
-| `tax_portals` | Official online tax portal references |
-| `tax_integrations` | Country/provider integration configuration |
-| `tax_registrations` | Business tax registration data |
-| `tax_rates` | Tax rates by jurisdiction and effective date |
-| `tax_returns` | Tax return workflow metadata, where applicable |
-| `tax_payments` | Payment references and reconciliation status |
-| `tax_receipts` | Receipt and confirmation metadata |
-| `invoices` | Internal invoice records |
-| `einvoice_submissions` | Submission attempts, authority references, and responses |
-| `invoice_documents` | Secure references to XML, PDF, and related documents |
-| `compliance_logs` | Audit events and integration logs |
+## 6. Run the Example
 
-## Security and Compliance
+Set `FBR_API_TOKEN` and `FBR_ENVIRONMENT` in the shell, then run:
 
-- Use official documentation and authorized access methods.
-- Confirm whether a government service offers an API before designing automation around it.
-- Obtain required taxpayer consent, registrations, licenses, and provider authorization.
-- Store API keys, passwords, certificates, and private keys in a secrets manager or encrypted credential store.
-- Never commit production secrets to source control.
-- Enforce tenant isolation and role-based access control.
-- Encrypt sensitive data in transit and at rest.
-- Use idempotency controls and duplicate detection for submissions and payment operations.
-- Keep audit trails and retention policies aligned with applicable law.
-- Separate invoice submission status from tax payment status.
-- Version country rules, schemas, and integration adapters.
-- Test with official sandboxes or test environments before production use.
+```bash
+php example.php
+```
 
-## Implementation Checklist
+The script validates the sample invoice and prints the returned JSON. Submission is intentionally commented out until you confirm the validation response and payload are correct.
 
-- [ ] Select target countries and business types.
-- [ ] Identify official tax authority systems and supported APIs.
-- [ ] Confirm legal, licensing, and taxpayer eligibility requirements.
-- [ ] Separate payment, filing, tax calculation, and e-invoicing modules.
-- [ ] Implement country-specific validation and formats.
-- [ ] Configure authentication and secret management.
-- [ ] Implement retries, idempotency, and error handling.
-- [ ] Store authority responses and reconciliation references.
-- [ ] Test against official documentation and sandbox environments.
-- [ ] Review current legal requirements and deadlines before launch.
+## Production Checklist
 
-## Important Disclaimer
+- Confirm taxpayer eligibility, onboarding, and any applicable licensed-integrator requirements.
+- Use the official current API specification and authorized credentials.
+- Keep tokens and certificates secret and server-side.
+- Validate invoice data locally before sending it.
+- Store submission status, FBR invoice number, timestamps, and necessary audit metadata.
+- Redact personal/tax data and credentials from logs.
+- Implement idempotency and duplicate-submission protection where supported.
+- If a request times out, check the submission status before retrying to avoid duplicate invoices.
+- Use TLS certificate verification and bounded timeouts.
+- Test with authorized sandbox credentials before production deployment.
 
-This README is a technical starting directory, not legal or tax advice and not a guarantee that every listed portal offers a public API, automated payment capability, or mandatory e-invoicing service. Government systems, country coverage, rules, and deadlines can change. Verify the current official documentation and obtain qualified local advice before production deployment.
+## License and Disclaimer
 
-## Contact GEROW TECH
+This repository example is provided for development and integration guidance. It is not an official FBR library and does not constitute tax or legal advice. You are responsible for verifying the current FBR/PRAL requirements and obtaining the required integration authorization.
 
-- **Website:** [gerowtech.com](https://gerowtech.com/)
-- **WhatsApp:** [+92 321 5348101](https://wa.me/923215348101)
-- **Email:** contact@gerowtech.com
+---
 
-For API development, tax integration, e-invoicing, or project inquiries, visit our website or contact us on WhatsApp.
+Maintained by **GEROW TECH**.
+
+- Website: https://gerowtech.com/
+- WhatsApp: https://wa.me/923215348101
+- Email: contact@gerowtech.com
+
+## Spain — VERI*FACTU Digital Invoicing API (PHP cURL)
+
+Spain's Agencia Estatal de Administración Tributaria (AEAT) VERI*FACTU service uses SOAP/XML rather than a typical JSON REST API. Requests must follow the current AEAT WSDL/XSD schemas and integration requirements.
+
+### Official Documentation
+
+- [AEAT VERI*FACTU Technical Information](https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/informacion-tecnica.html)
+- [AEAT Web Services / WSDL Information](https://www3.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/informacion-tecnica/wsdl-servicios-web.html)
+- [VERI*FACTU Web Service Description (PDF)](https://sede.agenciatributaria.gob.es/static_files/AEAT_Desarrolladores/EEDD/IVA/VERI-FACTU/Veri-Factu_Descripcion_SWeb.pdf)
+
+### Endpoint Configuration
+
+Use the service address specified by the current AEAT technical documentation for your environment. Do not assume a URL copied from an old example is still valid.
+
+### PHP cURL SOAP Request Template
+
+This example demonstrates the transport layer only. The SOAP body below is a placeholder: replace it with a complete, schema-valid request generated from the current AEAT WSDL/XSD and VERI*FACTU specification. Do not send the placeholder to production.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+$url = getenv('AEAT_VERIFACTU_URL') ?: '';
+$certificate = getenv('AEAT_CLIENT_CERT') ?: '';
+$privateKey = getenv('AEAT_CLIENT_KEY') ?: '';
+
+if ($url === '' || $certificate === '' || $privateKey === '') {
+    throw new RuntimeException(
+        'Configure AEAT_VERIFACTU_URL, AEAT_CLIENT_CERT and AEAT_CLIENT_KEY.'
+    );
+}
+
+// Replace with a complete request generated according to the official AEAT XSD.
+// The empty body element below is NOT a valid invoice submission.
+$soapXml = <<<'XML'
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <!-- Insert schema-valid VERI*FACTU request XML here. -->
+    </soapenv:Body>
+</soapenv:Envelope>
+XML;
+
+$ch = curl_init($url);
+
+curl_setopt_array($ch, [
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => $soapXml,
+    CURLOPT_HTTPHEADER => [
+        'Content-Type: text/xml; charset=UTF-8',
+        'Accept: text/xml',
+    ],
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CONNECTTIMEOUT => 15,
+    CURLOPT_TIMEOUT => 60,
+    CURLOPT_SSLCERT => $certificate,
+    CURLOPT_SSLKEY => $privateKey,
+    CURLOPT_SSL_VERIFYPEER => true,
+    CURLOPT_SSL_VERIFYHOST => 2,
+]);
+
+$response = curl_exec($ch);
+$httpStatus = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if ($response === false) {
+    $error = curl_error($ch);
+    curl_close($ch);
+    throw new RuntimeException('AEAT connection failed: ' . $error);
+}
+
+curl_close($ch);
+
+echo "HTTP status: {$httpStatus}\n";
+echo $response . PHP_EOL;
+```
+
+Configure the endpoint and certificate paths in the server environment. Never commit private keys, certificates, or passwords to source control. Depending on the certificate format and AEAT requirements, additional client-certificate configuration may be necessary.
+
+### VERI*FACTU Implementation Requirements
+
+- Build the SOAP envelope and invoice records from the current official WSDL/XSD schemas.
+- Implement the required invoice identification, tax details, timestamps, software-system information, and hash-chain fields.
+- Validate XML locally before sending.
+- Parse the complete SOAP response, including submission-level and individual-record results.
+- Handle acceptance, partial acceptance, rejection, timeouts, and duplicate-submission scenarios.
+- Test in the authorized AEAT test environment before production.
+- Follow the applicable Spanish invoicing rules and AEAT integration requirements.
+
+**Important:** This is a PHP cURL transport template, not a complete working VERI*FACTU implementation. The request body, certificate setup, endpoint, hashing, and response parsing must be completed and verified against the current official AEAT specification.
 
