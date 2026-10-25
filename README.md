@@ -168,6 +168,189 @@ GEROW TECH can use this directory as a starting point for connecting ERP, POS, a
 
 **Important:** The official website links in this README are starting points, not direct API endpoint URLs. API availability and access methods vary by country; some services use accredited providers, certified software, private partner APIs, or manual portal workflows instead of public APIs. Do not automate a portal or use undocumented endpoints without authorization.
 
+## API Code Examples
+
+The following examples show a provider-neutral pattern for connecting your application to a tax or e-invoicing API. Replace the placeholder URL, endpoint, payload, and authentication method with values from the selected authority's official API documentation. These examples are templates, not working country-specific endpoints.
+
+### 1. Environment Configuration
+
+Create a `.env` file (do not commit it to Git):
+
+```env
+TAX_API_BASE_URL=https://api.example.gov
+TAX_API_TOKEN=replace_with_your_secret_token
+TAX_API_TIMEOUT_MS=15000
+```
+
+Add `.env` to `.gitignore`:
+
+```gitignore
+.env
+.env.*
+!.env.example
+```
+
+### 2. Node.js API Client (Fetch)
+
+Requires Node.js 18 or later. This example submits an invoice to a placeholder endpoint.
+
+```javascript
+const baseUrl = process.env.TAX_API_BASE_URL;
+const apiToken = process.env.TAX_API_TOKEN;
+const timeoutMs = Number(process.env.TAX_API_TIMEOUT_MS || 15000);
+
+async function submitInvoice(invoice) {
+  if (!baseUrl || !apiToken) {
+    throw new Error("Tax API configuration is missing");
+  }
+
+  const url = new URL("/v1/invoices", baseUrl);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(invoice),
+      signal: controller.signal
+    });
+
+    const responseText = await response.text();
+    let result;
+
+    try {
+      result = responseText ? JSON.parse(responseText) : {};
+    } catch {
+      result = { message: responseText };
+    }
+
+    if (!response.ok) {
+      const error = new Error(`Tax API request failed: HTTP ${response.status}`);
+      error.status = response.status;
+      error.details = result;
+      throw error;
+    }
+
+    return result;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+// Example only — use the schema required by your tax authority.
+const invoice = {
+  invoiceNumber: "INV-10001",
+  issueDate: "2026-10-25",
+  currency: "EUR",
+  seller: { taxId: "SELLER_TAX_ID" },
+  buyer: { taxId: "BUYER_TAX_ID" },
+  lines: [
+    {
+      description: "Software services",
+      quantity: 1,
+      unitPrice: 100,
+      taxRate: 20
+    }
+  ]
+};
+
+submitInvoice(invoice)
+  .then((result) => console.log("Submission result:", result))
+  .catch((error) => {
+    // Avoid logging tokens or unnecessary personal/tax data.
+    console.error(error.message, error.status || "");
+  });
+```
+
+### 3. Express.js Internal Endpoint
+
+Use your own authenticated backend endpoint so browser clients never receive the tax authority's secret token.
+
+```javascript
+import express from "express";
+import { submitInvoice } from "./taxApiClient.js";
+import { requireAuth } from "./middleware/requireAuth.js";
+
+const app = express();
+app.use(express.json({ limit: "1mb" }));
+
+app.post("/api/tax/invoices", requireAuth, async (req, res) => {
+  try {
+    // Validate req.body against your invoice schema before sending it upstream.
+    const result = await submitInvoice(req.body);
+    res.status(200).json({ success: true, data: result });
+  } catch (error) {
+    const status = error.status && error.status >= 400 && error.status < 500
+      ? 502
+      : 502;
+
+    res.status(status).json({
+      success: false,
+      message: "Invoice submission failed. Check the submission status before retrying."
+    });
+  }
+});
+
+app.listen(process.env.PORT || 3000);
+```
+
+In a real project, export `submitInvoice` from a dedicated module, validate input with a schema library, apply rate limits, and persist submission status. Add idempotency keys if the authority supports them, so retries do not create duplicate invoices.
+
+### 4. cURL Request
+
+```bash
+curl --request POST "${TAX_API_BASE_URL}/v1/invoices" \
+  --header "Authorization: Bearer ${TAX_API_TOKEN}" \
+  --header "Content-Type: application/json" \
+  --header "Accept: application/json" \
+  --data '{
+    "invoiceNumber": "INV-10001",
+    "issueDate": "2026-10-25",
+    "currency": "EUR",
+    "lines": [
+      {
+        "description": "Software services",
+        "quantity": 1,
+        "unitPrice": 100,
+        "taxRate": 20
+      }
+    ]
+  }'
+```
+
+### 5. Suggested Unified Internal API
+
+A country-neutral application could expose these internal routes:
+
+| Method | Internal Route | Purpose |
+|---|---|---|
+| `GET` | `/api/tax/countries` | List supported country integrations |
+| `GET` | `/api/tax/providers?country=XX` | List configured providers for a country |
+| `POST` | `/api/tax/calculate` | Calculate tax using configured rules or a tax provider |
+| `POST` | `/api/tax/invoices` | Submit an invoice to the configured provider |
+| `GET` | `/api/tax/invoices/:id` | Retrieve stored invoice/submission status |
+| `POST` | `/api/tax/filings` | Start a supported tax-filing workflow |
+| `GET` | `/api/tax/filings/:id` | Check filing status |
+| `POST` | `/api/tax/webhooks/:provider` | Receive provider callbacks after signature verification |
+
+These are proposed routes for GEROW TECH's own backend, not official government endpoints.
+
+### Implementation and Security Checklist
+
+- Keep API tokens, client secrets, private keys, and certificates on the server.
+- Use the provider's documented OAuth2, mutual TLS, certificate, or other required authentication method.
+- Validate invoice fields and country-specific schemas before submission.
+- Use TLS, request timeouts, safe retry policies, and idempotency where supported.
+- Verify webhook signatures and prevent replay attacks.
+- Store audit logs and submission references while minimizing sensitive tax and personal data.
+- Never treat a request as successful until the authority/provider response confirms the required status.
+- Test only with official sandbox credentials before production use.
+
 ## Suggested Architecture
 
 ```text
