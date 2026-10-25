@@ -4,26 +4,6 @@
 
 A reference directory for integrating business applications with government tax portals, electronic tax filing services, tax payment systems, and e-invoicing platforms around the world.
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Integration Categories](#integration-categories)
-- [Country-Wise Tax Systems](#country-wise-tax-systems)
-  - [Asia](#asia)
-  - [Middle East](#middle-east)
-  - [Europe](#europe)
-  - [Africa](#africa)
-  - [North America](#north-america)
-  - [South America](#south-america)
-  - [Oceania](#oceania)
-- [E-Invoicing Integration Providers](#e-invoicing-integration-providers)
-- [Suggested Architecture](#suggested-architecture)
-- [Recommended Technology Stack](#recommended-technology-stack)
-- [Suggested Database Tables](#suggested-database-tables)
-- [Security and Compliance](#security-and-compliance)
-- [Implementation Checklist](#implementation-checklist)
-- [Important Disclaimer](#important-disclaimer)
-
 ## Overview
 
 This repository catalogs official online tax services and e-invoicing systems that may be relevant when building tax integrations for:
@@ -162,6 +142,32 @@ These commercial providers and networks may help connect business applications t
 | Complyance | Multi-country e-invoicing solutions | [complyance.io](https://complyance.io/) |
 | OpenPeppol | Peppol network and interoperability resources | [peppol.org](https://peppol.org/) |
 
+## API Integration and Developer Access
+
+GEROW TECH can use this directory as a starting point for connecting ERP, POS, accounting, billing, and eCommerce platforms with supported tax and e-invoicing services.
+
+| API Integration Area | Purpose | Important Notes |
+|---|---|---|
+| Tax authority APIs | Submit or retrieve tax data where officially supported | Confirm API availability, eligibility, and authorization with the relevant authority. |
+| E-invoicing APIs | Validate, submit, and track electronic invoices | Country-specific formats, certificates, and clearance rules may apply. |
+| Tax calculation APIs | Calculate taxes based on jurisdiction and transaction details | Use a reputable provider or verified official service; maintain effective dates for tax rules. |
+| Tax payment APIs | Initiate or reconcile payments where supported | Do not assume a portal provides a public payment API. Payment services may require a bank or licensed provider. |
+| Taxpayer verification APIs | Verify taxpayer or VAT/GST registration details | Check access restrictions, rate limits, and permitted use. |
+| Webhooks and status APIs | Receive submission updates and reconcile outcomes | Verify webhook signatures, implement retries, and make processing idempotent. |
+
+### API Integration Workflow
+
+1. Select the country and identify the responsible tax authority.
+2. Visit the authority's official website listed above and locate its current API, developer, or e-invoicing technical documentation.
+3. Confirm business eligibility, registration requirements, credentials, certificates, and sandbox access.
+4. Implement a country-specific adapter behind a unified internal API.
+5. Validate payloads against the authority's current schema before submission.
+6. Store request identifiers, authority responses, timestamps, and status history securely.
+7. Test duplicate handling, retries, timeouts, token expiry, and reconciliation in a test environment.
+8. Recheck official documentation and compliance requirements before production deployment.
+
+**Important:** The official website links in this README are starting points, not direct API endpoint URLs. API availability and access methods vary by country; some services use accredited providers, certified software, private partner APIs, or manual portal workflows instead of public APIs. Do not automate a portal or use undocumented endpoints without authorization.
+
 ## Suggested Architecture
 
 ```text
@@ -255,8 +261,11 @@ ERP / POS / Accounting / eCommerce / SaaS
 
 This README is a technical starting directory, not legal or tax advice and not a guarantee that every listed portal offers a public API, automated payment capability, or mandatory e-invoicing service. Government systems, country coverage, rules, and deadlines can change. Verify the current official documentation and obtain qualified local advice before production deployment.
 
----
+## Contact GEROW TECH
 
-**Maintained by:** GEROW TECH  
-**Project:** Global Online Tax Integration  
-**Scope:** Online Tax Payment, Electronic Tax Filing, Tax Reporting, and E-Invoicing
+- **Website:** [gerowtech.com](https://gerowtech.com/)
+- **WhatsApp:** [+92 321 5348101](https://wa.me/923215348101)
+- **Email:** contact@gerowtech.com
+
+For API development, tax integration, e-invoicing, or project inquiries, visit our website or contact us on WhatsApp.
+
