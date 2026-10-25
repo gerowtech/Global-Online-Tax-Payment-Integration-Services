@@ -1,377 +1,262 @@
-# Global-Online-Tax-Payment-Integration-Services
-GEROW TECH helps businesses integrate online tax payment workflows, tax reporting, electronic invoicing, and tax compliance services into ERP, POS, accounting, billing, and eCommerce platforms.
-<div align="center">
+# Global Online Tax Integration
 
-# 🌐 Payment Gateway Integration Services
+**GEROW TECH — Online Tax Payment, Tax Reporting, and E-Invoicing Integrations**
 
-### Secure • Scalable • Global Payment Integrations
+A reference directory for integrating business applications with government tax portals, electronic tax filing services, tax payment systems, and e-invoicing platforms around the world.
 
-**By GEROW TECH LLC**
+## Table of Contents
 
-Integrating payment gateways into e-commerce stores, SaaS platforms, marketplaces, and custom applications.
+- [Overview](#overview)
+- [Integration Categories](#integration-categories)
+- [Country-Wise Tax Systems](#country-wise-tax-systems)
+  - [Asia](#asia)
+  - [Middle East](#middle-east)
+  - [Europe](#europe)
+  - [Africa](#africa)
+  - [North America](#north-america)
+  - [South America](#south-america)
+  - [Oceania](#oceania)
+- [E-Invoicing Integration Providers](#e-invoicing-integration-providers)
+- [Suggested Architecture](#suggested-architecture)
+- [Recommended Technology Stack](#recommended-technology-stack)
+- [Suggested Database Tables](#suggested-database-tables)
+- [Security and Compliance](#security-and-compliance)
+- [Implementation Checklist](#implementation-checklist)
+- [Important Disclaimer](#important-disclaimer)
 
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-Chat%20Now-25D366?logo=whatsapp&logoColor=white)](https://wa.me/923215348101)
-[![Website](https://img.shields.io/badge/Website-gerowtech.com-0A66C2?logo=googlechrome&logoColor=white)](https://www.gerowtech.com)
+## Overview
 
-</div>
+This repository catalogs official online tax services and e-invoicing systems that may be relevant when building tax integrations for:
 
----
+- Enterprise Resource Planning (ERP) systems
+- Point of Sale (POS) software
+- Accounting and billing applications
+- eCommerce platforms
+- Customer Relationship Management (CRM) systems
+- Subscription billing platforms
+- Financial management applications
+- Multi-country SaaS products
 
-## 📌 Overview
+> **Important distinction:** Online tax payment, electronic tax filing, tax reporting, tax calculation, and e-invoicing are different capabilities. A government portal may support online transactions without offering a public API for third-party automation.
 
-GEROW TECH LLC provides payment gateway integration services for businesses that need reliable online payment processing. This repository is a country-organized reference directory of payment providers, official websites, and useful integration resources.
+## Integration Categories
 
-The directory covers **Pakistan, Germany, Australia, New Zealand, the Netherlands, Sweden, Italy, France, Spain, the United Kingdom, Canada, Singapore, the United Arab Emirates, Brazil, Japan, and India**, plus selected global providers.
+| Category | Description |
+|---|---|
+| Online tax payment | Initiate or reconcile tax payments through officially supported channels. |
+| Electronic tax filing | Prepare or submit tax returns using an authorized service or supported API. |
+| E-invoicing | Generate, validate, transmit, and track structured electronic invoice records. |
+| VAT / GST reporting | Support applicable value-added tax or goods and services tax reporting. |
+| Sales tax | Calculate and report applicable national, state, provincial, or local sales taxes. |
+| Taxpayer verification | Verify taxpayer details where an official verification service is available. |
+| Payment confirmation | Retrieve or reconcile payment references and receipts where supported. |
+| Compliance records | Retain invoice records, authority responses, and audit logs. |
 
-> **Important:** This is a discovery directory, not a guarantee that every provider supports every merchant or country. Availability depends on the provider's current policies, business registration country, industry, underwriting approval, and requested payment methods. Verify current eligibility and API documentation with the provider before implementation.
+## Country-Wise Tax Systems
 
-## 🧰 Services
+The following table is a starting directory of official portals. The listed portal is not necessarily a public API endpoint, and the presence of an e-invoicing system does not mean that automated tax payment is available.
 
-- Payment gateway API integration
-- Hosted checkout and embedded checkout
-- E-commerce payment integration
-- Laravel / PHP integration
-- Node.js / Express.js integration
-- React.js and Next.js checkout interfaces
-- Python and Java backend integrations
-- Webhook handling and payment status verification
-- Refund and cancellation workflows
-- Subscription and recurring-payment integration (where supported)
-- Sandbox testing, error handling, and production deployment
-- Payment-flow documentation and developer handover
+### Asia
 
-## 🗺️ Country-wise Payment Gateway Directory
+| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
+|---|---|---|---|---|
+| Pakistan | Federal Board of Revenue (FBR) | IRIS / FBR e-Payment services | FBR Digital Invoicing, where applicable | [fbr.gov.pk](https://www.fbr.gov.pk/) |
+| India | GST and Income Tax authorities | GST Portal / Income Tax e-Filing | GST Invoice Registration Portal (IRP), where applicable | [gst.gov.in](https://www.gst.gov.in/) |
+| Malaysia | Inland Revenue Board of Malaysia (LHDN) | MyTax | MyInvois | [hasil.gov.my](https://www.hasil.gov.my/) |
+| Singapore | Inland Revenue Authority of Singapore (IRAS) | myTax Portal | InvoiceNow / Peppol ecosystem | [iras.gov.sg](https://www.iras.gov.sg/) |
+| Indonesia | Directorate General of Taxes | Coretax DJP and official tax services | Applicable electronic tax invoice systems | [pajak.go.id](https://www.pajak.go.id/) |
+| Thailand | Revenue Department | e-Filing and online tax services | Electronic Tax Invoice & e-Receipt, where applicable | [rd.go.th](https://www.rd.go.th/) |
+| Vietnam | Tax authority | Official electronic tax services | Electronic invoice system | [gdt.gov.vn](https://www.gdt.gov.vn/) |
+| Philippines | Bureau of Internal Revenue (BIR) | BIR eServices | Applicable electronic invoicing and reporting systems | [bir.gov.ph](https://www.bir.gov.ph/) |
+| Japan | National Tax Agency | e-Tax | Qualified Invoice System and electronic tax filing | [nta.go.jp](https://www.nta.go.jp/) |
+| South Korea | National Tax Service | Hometax | Electronic tax invoice system | [nts.go.kr](https://www.nts.go.kr/) |
+| China | State Taxation Administration | Official electronic tax services | Electronic invoice systems | [chinatax.gov.cn](https://www.chinatax.gov.cn/) |
+| Taiwan | Ministry of Finance | Official tax services | Government electronic invoice platform | [mof.gov.tw](https://www.mof.gov.tw/) |
 
-Logos below use website favicons to keep the README lightweight. A favicon may differ from a provider's official brand logo and may not load in every Markdown viewer.
+### Middle East
 
-### 🇵🇰 Pakistan
+| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
+|---|---|---|---|---|
+| Saudi Arabia | Zakat, Tax and Customs Authority (ZATCA) | ZATCA e-Services | FATOORA e-invoicing | [zatca.gov.sa](https://zatca.gov.sa/) |
+| United Arab Emirates | Federal Tax Authority (FTA) | EmaraTax | UAE e-invoicing framework | [tax.gov.ae](https://tax.gov.ae/) |
+| Bahrain | National Bureau for Revenue | NBR eServices | Check applicable invoicing requirements | [nbr.gov.bh](https://www.nbr.gov.bh/) |
+| Oman | Oman Tax Authority | Tax Authority eServices | Check applicable electronic tax requirements | [taxoman.gov.om](https://taxoman.gov.om/) |
+| Qatar | General Tax Authority | Dhareeba | Check applicable electronic tax services | [gta.gov.qa](https://gta.gov.qa/) |
+| Kuwait | Ministry of Finance / relevant authorities | Official government tax services | Verify applicable systems and requirements | [mof.gov.kw](https://www.mof.gov.kw/) |
+| Jordan | Income and Sales Tax Department | ISTD eServices | JoFotara electronic invoicing system | [istd.gov.jo](https://istd.gov.jo/) |
 
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | -------------------- |
-| Safepay | <img src="https://www.google.com/s2/favicons?domain=safepay.pk&sz=64" width="32" alt="Safepay"> | [safepay.pk](https://safepay.pk) |
-| PayFast Pakistan | <img src="https://www.google.com/s2/favicons?domain=gopayfast.com&sz=64" width="32" alt="PayFast"> | [gopayfast.com](https://gopayfast.com) |
-| JazzCash | <img src="https://www.google.com/s2/favicons?domain=jazzcash.com.pk&sz=64" width="32" alt="JazzCash"> | [jazzcash.com.pk](https://www.jazzcash.com.pk) |
-| Easypaisa | <img src="https://www.google.com/s2/favicons?domain=easypaisa.com.pk&sz=64" width="32" alt="Easypaisa"> | [easypaisa.com.pk](https://easypaisa.com.pk) |
-| PayPro | <img src="https://www.google.com/s2/favicons?domain=paypro.com.pk&sz=64" width="32" alt="PayPro"> | [paypro.com.pk](https://paypro.com.pk) |
-| HBL Payment Gateway | <img src="https://www.google.com/s2/favicons?domain=hbl.com&sz=64" width="32" alt="HBL"> | [hbl.com](https://www.hbl.com) |
-| Bank Alfalah IPG | <img src="https://www.google.com/s2/favicons?domain=bankalfalah.com&sz=64" width="32" alt="Bank Alfalah"> | [bankalfalah.com](https://www.bankalfalah.com) |
-| MCB Bank | <img src="https://www.google.com/s2/favicons?domain=mcb.com.pk&sz=64" width="32" alt="MCB Bank"> | [mcb.com.pk](https://www.mcb.com.pk) |
-| NIFT ePay | <img src="https://www.google.com/s2/favicons?domain=nift.pk&sz=64" width="32" alt="NIFT"> | [nift.pk](https://nift.pk) |
-| Keenu | <img src="https://www.google.com/s2/favicons?domain=keenu.pk&sz=64" width="32" alt="Keenu"> | [keenu.pk](https://keenu.pk) |
-| XPay | <img src="https://www.google.com/s2/favicons?domain=postex.pk&sz=64" width="32" alt="XPay"> | [xpay.postex.pk](https://xpay.postex.pk) |
+### Europe
 
-### 🇩🇪 Germany
+| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
+|---|---|---|---|---|
+| Italy | Agenzia delle Entrate | Official tax services | Sistema di Interscambio (SdI) | [agenziaentrate.gov.it](https://www.agenziaentrate.gov.it/) |
+| Germany | Relevant federal and state tax authorities | ELSTER | XRechnung / ZUGFeRD and applicable exchange channels | [elster.de](https://www.elster.de/) |
+| Spain | Agencia Estatal de Administración Tributaria (AEAT) | Sede Electrónica | VERI*FACTU / applicable invoicing requirements | [sede.agenciatributaria.gob.es](https://sede.agenciatributaria.gob.es/) |
+| France | Direction générale des Finances publiques (DGFiP) | impots.gouv.fr | French e-invoicing and e-reporting framework | [impots.gouv.fr](https://www.impots.gouv.fr/) |
+| Netherlands | Belastingdienst | Mijn Belastingdienst | Peppol and applicable invoice exchange systems | [belastingdienst.nl](https://www.belastingdienst.nl/) |
+| Sweden | Swedish Tax Agency | Skatteverket e-services | Peppol and applicable invoice formats | [skatteverket.se](https://www.skatteverket.se/) |
+| Belgium | FPS Finance | MyMinfin | Peppol-based structured invoicing for applicable transactions | [financien.belgium.be](https://financien.belgium.be/) |
+| Poland | National Revenue Administration | e-Urząd Skarbowy | Krajowy System e-Faktur (KSeF) | [podatki.gov.pl](https://www.podatki.gov.pl/) |
+| Portugal | Autoridade Tributária e Aduaneira | Portal das Finanças | Certified invoicing and applicable reporting | [portaldasfinancas.gov.pt](https://www.portaldasfinancas.gov.pt/) |
+| Romania | National Agency for Fiscal Administration | SPV | RO e-Factura | [anaf.ro](https://www.anaf.ro/) |
+| Greece | Independent Authority for Public Revenue | myAADE | myDATA | [aade.gr](https://www.aade.gr/) |
+| Denmark | Danish Tax Agency | TastSelv | Applicable digital bookkeeping and invoice systems | [skat.dk](https://skat.dk/) |
+| Finland | Finnish Tax Administration | MyTax | Finvoice / Peppol and applicable systems | [vero.fi](https://www.vero.fi/) |
+| Norway | Norwegian Tax Administration | Official tax services / Altinn services | EHF / Peppol | [skatteetaten.no](https://www.skatteetaten.no/) |
+| Austria | Federal Ministry of Finance | FinanzOnline | Applicable structured e-invoice systems | [bmf.gv.at](https://www.bmf.gv.at/) |
+| Ireland | Revenue Commissioners | Revenue Online Service (ROS) | Applicable electronic invoicing and reporting arrangements | [revenue.ie](https://www.revenue.ie/) |
+| United Kingdom | HM Revenue & Customs (HMRC) | HMRC online services | Making Tax Digital and applicable invoicing arrangements | [gov.uk/hmrc](https://www.gov.uk/government/organisations/hm-revenue-customs) |
+| Switzerland | Federal Tax Administration | Official federal tax services | Applicable invoice formats and networks | [estv.admin.ch](https://www.estv.admin.ch/) |
 
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Mollie | <img src="https://www.google.com/s2/favicons?domain=mollie.com&sz=64" width="32" alt="Mollie"> | [mollie.com](https://www.mollie.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| Unzer | <img src="https://www.google.com/s2/favicons?domain=unzer.com&sz=64" width="32" alt="Unzer"> | [unzer.com](https://www.unzer.com) |
-| Computop | <img src="https://www.google.com/s2/favicons?domain=computop.com&sz=64" width="32" alt="Computop"> | [computop.com](https://www.computop.com) |
-| Worldline | <img src="https://www.google.com/s2/favicons?domain=worldline.com&sz=64" width="32" alt="Worldline"> | [worldline.com](https://worldline.com) |
-| PAYONE | <img src="https://www.google.com/s2/favicons?domain=payone.com&sz=64" width="32" alt="PAYONE"> | [payone.com](https://www.payone.com) |
-| Klarna | <img src="https://www.google.com/s2/favicons?domain=klarna.com&sz=64" width="32" alt="Klarna"> | [klarna.com](https://www.klarna.com) |
-| Nexi | <img src="https://www.google.com/s2/favicons?domain=nexigroup.com&sz=64" width="32" alt="Nexi"> | [nexigroup.com](https://www.nexigroup.com) |
+### Africa
 
-### 🇦🇺 Australia
+| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
+|---|---|---|---|---|
+| South Africa | South African Revenue Service (SARS) | eFiling | Applicable electronic tax reporting systems | [sars.gov.za](https://www.sars.gov.za/) |
+| Kenya | Kenya Revenue Authority (KRA) | iTax | eTIMS | [kra.go.ke](https://www.kra.go.ke/) |
+| Nigeria | Relevant federal and state tax authorities | Official tax services | Verify current e-invoicing and reporting requirements | [firs.gov.ng](https://www.firs.gov.ng/) |
+| Egypt | Egyptian Tax Authority | ETA e-services | Electronic invoicing and electronic receipt systems | [eta.gov.eg](https://www.eta.gov.eg/) |
+| Morocco | Direction Générale des Impôts | SIMPL and official services | Verify applicable electronic tax services | [tax.gov.ma](https://www.tax.gov.ma/) |
+| Rwanda | Rwanda Revenue Authority | Online tax services | EBM fiscal systems | [rra.gov.rw](https://www.rra.gov.rw/) |
+| Uganda | Uganda Revenue Authority | URA e-services | EFRIS | [ura.go.ug](https://www.ura.go.ug/) |
+| Tanzania | Tanzania Revenue Authority | TRA online services | Electronic fiscal devices and applicable systems | [tra.go.tz](https://www.tra.go.tz/) |
 
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal Australia | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com/au](https://www.paypal.com/au) |
-| eWAY | <img src="https://www.google.com/s2/favicons?domain=eway.com.au&sz=64" width="32" alt="eWAY"> | [eway.com.au](https://www.eway.com.au) |
-| Airwallex | <img src="https://www.google.com/s2/favicons?domain=airwallex.com&sz=64" width="32" alt="Airwallex"> | [airwallex.com](https://www.airwallex.com) |
-| SecurePay | <img src="https://www.google.com/s2/favicons?domain=securepay.com.au&sz=64" width="32" alt="SecurePay"> | [securepay.com.au](https://www.securepay.com.au) |
-| Fat Zebra | <img src="https://www.google.com/s2/favicons?domain=fatzebra.com&sz=64" width="32" alt="Fat Zebra"> | [fatzebra.com](https://www.fatzebra.com) |
-| Braintree | <img src="https://www.google.com/s2/favicons?domain=braintreepayments.com&sz=64" width="32" alt="Braintree"> | [braintreepayments.com](https://www.braintreepayments.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| Worldpay | <img src="https://www.google.com/s2/favicons?domain=worldpay.com&sz=64" width="32" alt="Worldpay"> | [worldpay.com](https://www.worldpay.com) |
-| Windcave | <img src="https://www.google.com/s2/favicons?domain=windcave.com&sz=64" width="32" alt="Windcave"> | [windcave.com](https://www.windcave.com) |
+### North America
 
-### 🇳🇿 New Zealand
+| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
+|---|---|---|---|---|
+| United States | Internal Revenue Service (IRS) and state/local authorities | IRS and state tax portals | State- and transaction-specific requirements | [irs.gov](https://www.irs.gov/) |
+| Canada | Canada Revenue Agency (CRA) and provincial authorities | My Business Account | GST/HST and applicable provincial requirements | [canada.ca/cra](https://www.canada.ca/en/revenue-agency.html) |
+| Mexico | Servicio de Administración Tributaria (SAT) | SAT Portal | CFDI electronic invoicing | [sat.gob.mx](https://www.sat.gob.mx/) |
 
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Windcave | <img src="https://www.google.com/s2/favicons?domain=windcave.com&sz=64" width="32" alt="Windcave"> | [windcave.com](https://www.windcave.com) |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal New Zealand | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com/nz](https://www.paypal.com/nz) |
-| Worldline | <img src="https://www.google.com/s2/favicons?domain=worldline.com&sz=64" width="32" alt="Worldline"> | [worldline.com](https://worldline.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| Braintree | <img src="https://www.google.com/s2/favicons?domain=braintreepayments.com&sz=64" width="32" alt="Braintree"> | [braintreepayments.com](https://www.braintreepayments.com) |
-| eWAY | <img src="https://www.google.com/s2/favicons?domain=eway.io&sz=64" width="32" alt="eWAY"> | [eway.io](https://www.eway.io) |
-| Checkout.com | <img src="https://www.google.com/s2/favicons?domain=checkout.com&sz=64" width="32" alt="Checkout.com"> | [checkout.com](https://www.checkout.com) |
-| Worldpay | <img src="https://www.google.com/s2/favicons?domain=worldpay.com&sz=64" width="32" alt="Worldpay"> | [worldpay.com](https://www.worldpay.com) |
-| Paystation | <img src="https://www.google.com/s2/favicons?domain=paystation.co.nz&sz=64" width="32" alt="Paystation"> | [paystation.co.nz](https://www.paystation.co.nz) |
+### South America
 
-### 🇳🇱 Netherlands
+| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
+|---|---|---|---|---|
+| Brazil | Receita Federal and state/municipal authorities | e-CAC and applicable portals | NF-e / NFS-e | [gov.br/receitafederal](https://www.gov.br/receitafederal/) |
+| Argentina | Agencia de Recaudación y Control Aduanero (ARCA) | Official tax services | Electronic invoicing | [arca.gob.ar](https://www.arca.gob.ar/) |
+| Chile | Servicio de Impuestos Internos (SII) | SII Online | DTE electronic tax documents | [sii.cl](https://www.sii.cl/) |
+| Colombia | Dirección de Impuestos y Aduanas Nacionales (DIAN) | DIAN Online | Electronic invoicing | [dian.gov.co](https://www.dian.gov.co/) |
+| Peru | SUNAT | SUNAT Online | Electronic invoicing | [sunat.gob.pe](https://www.sunat.gob.pe/) |
+| Uruguay | Dirección General Impositiva (DGI) | DGI Online | Electronic invoicing (CFE) | [gub.uy/dgi](https://www.gub.uy/direccion-general-impositiva/) |
+| Ecuador | Servicio de Rentas Internas (SRI) | SRI Online | Electronic invoicing | [sri.gob.ec](https://www.sri.gob.ec/) |
 
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Mollie | <img src="https://www.google.com/s2/favicons?domain=mollie.com&sz=64" width="32" alt="Mollie"> | [mollie.com](https://www.mollie.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Buckaroo | <img src="https://www.google.com/s2/favicons?domain=buckaroo.eu&sz=64" width="32" alt="Buckaroo"> | [buckaroo.eu](https://www.buckaroo.eu) |
-| PAY. | <img src="https://www.google.com/s2/favicons?domain=pay.nl&sz=64" width="32" alt="PAY."> | [pay.nl](https://www.pay.nl) |
-| Worldline | <img src="https://www.google.com/s2/favicons?domain=worldline.com&sz=64" width="32" alt="Worldline"> | [worldline.com](https://worldline.com) |
-| CCV | <img src="https://www.google.com/s2/favicons?domain=ccv.eu&sz=64" width="32" alt="CCV"> | [ccv.eu](https://www.ccv.eu) |
-| MultiSafepay | <img src="https://www.google.com/s2/favicons?domain=multisafepay.com&sz=64" width="32" alt="MultiSafepay"> | [multisafepay.com](https://www.multisafepay.com) |
-| Klarna | <img src="https://www.google.com/s2/favicons?domain=klarna.com&sz=64" width="32" alt="Klarna"> | [klarna.com](https://www.klarna.com) |
+### Oceania
 
-### 🇸🇪 Sweden
+| Country | Tax Authority | Online Tax Portal / System | E-Invoice or Related System | Official Website |
+|---|---|---|---|---|
+| Australia | Australian Taxation Office (ATO) | Online services for business | Peppol eInvoicing | [ato.gov.au](https://www.ato.gov.au/) |
+| New Zealand | Inland Revenue | myIR | Peppol eInvoicing | [ird.govt.nz](https://www.ird.govt.nz/) |
+| Fiji | Fiji Revenue and Customs Service (FRCS) | FRCS online tax services | Verify applicable electronic tax requirements | [frcs.org.fj](https://www.frcs.org.fj/) |
 
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| Svea | <img src="https://www.google.com/s2/favicons?domain=svea.com&sz=64" width="32" alt="Svea"> | [svea.com](https://www.svea.com) |
-| Swedbank Pay | <img src="https://www.google.com/s2/favicons?domain=swedbankpay.com&sz=64" width="32" alt="Swedbank Pay"> | [swedbankpay.com](https://www.swedbankpay.com) |
-| Klarna | <img src="https://www.google.com/s2/favicons?domain=klarna.com&sz=64" width="32" alt="Klarna"> | [klarna.com](https://www.klarna.com) |
-| Worldline | <img src="https://www.google.com/s2/favicons?domain=worldline.com&sz=64" width="32" alt="Worldline"> | [worldline.com](https://worldline.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Mollie | <img src="https://www.google.com/s2/favicons?domain=mollie.com&sz=64" width="32" alt="Mollie"> | [mollie.com](https://www.mollie.com) |
-| Nexi | <img src="https://www.google.com/s2/favicons?domain=nexigroup.com&sz=64" width="32" alt="Nexi"> | [nexigroup.com](https://www.nexigroup.com) |
-| SumUp | <img src="https://www.google.com/s2/favicons?domain=sumup.com&sz=64" width="32" alt="SumUp"> | [sumup.com](https://www.sumup.com) |
+## E-Invoicing Integration Providers
 
-### 🇮🇹 Italy
+These commercial providers and networks may help connect business applications to supported country systems. Coverage, licensing, supported workflows, and pricing must be checked for each target country.
 
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Nexi | <img src="https://www.google.com/s2/favicons?domain=nexigroup.com&sz=64" width="32" alt="Nexi"> | [nexigroup.com](https://www.nexigroup.com) |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| Satispay | <img src="https://www.google.com/s2/favicons?domain=satispay.com&sz=64" width="32" alt="Satispay"> | [satispay.com](https://www.satispay.com) |
-| Axerve | <img src="https://www.google.com/s2/favicons?domain=axerve.com&sz=64" width="32" alt="Axerve"> | [axerve.com](https://www.axerve.com) |
-| Braintree | <img src="https://www.google.com/s2/favicons?domain=braintreepayments.com&sz=64" width="32" alt="Braintree"> | [braintreepayments.com](https://www.braintreepayments.com) |
-| Worldline | <img src="https://www.google.com/s2/favicons?domain=worldline.com&sz=64" width="32" alt="Worldline"> | [worldline.com](https://worldline.com) |
-| Mollie | <img src="https://www.google.com/s2/favicons?domain=mollie.com&sz=64" width="32" alt="Mollie"> | [mollie.com](https://www.mollie.com) |
-| Checkout.com | <img src="https://www.google.com/s2/favicons?domain=checkout.com&sz=64" width="32" alt="Checkout.com"> | [checkout.com](https://www.checkout.com) |
+| Provider | Integration Focus | Official Website |
+|---|---|---|
+| Sovos | Global tax compliance and e-invoicing | [sovos.com](https://sovos.com/) |
+| Avalara | Tax compliance and e-invoicing | [avalara.com](https://www.avalara.com/) |
+| Thomson Reuters Pagero | Global invoice exchange and compliance | [pagero.com](https://www.pagero.com/) |
+| Taxilla | E-invoicing API integration | [taxilla.com](https://www.taxilla.com/) |
+| Complyance | Multi-country e-invoicing solutions | [complyance.io](https://complyance.io/) |
+| OpenPeppol | Peppol network and interoperability resources | [peppol.org](https://peppol.org/) |
 
-### 🇫🇷 France
+## Suggested Architecture
 
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Worldline | <img src="https://www.google.com/s2/favicons?domain=worldline.com&sz=64" width="32" alt="Worldline"> | [worldline.com](https://worldline.com) |
-| Lyra | <img src="https://www.google.com/s2/favicons?domain=lyra.com&sz=64" width="32" alt="Lyra"> | [lyra.com](https://www.lyra.com) |
-| PayPlug | <img src="https://www.google.com/s2/favicons?domain=payplug.com&sz=64" width="32" alt="PayPlug"> | [payplug.com](https://www.payplug.com) |
-| Mollie | <img src="https://www.google.com/s2/favicons?domain=mollie.com&sz=64" width="32" alt="Mollie"> | [mollie.com](https://www.mollie.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| Checkout.com | <img src="https://www.google.com/s2/favicons?domain=checkout.com&sz=64" width="32" alt="Checkout.com"> | [checkout.com](https://www.checkout.com) |
-
-### 🇪🇸 Spain
-
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Redsys | <img src="https://www.google.com/s2/favicons?domain=redsys.es&sz=64" width="32" alt="Redsys"> | [redsys.es](https://www.redsys.es) |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| MONEI | <img src="https://www.google.com/s2/favicons?domain=monei.com&sz=64" width="32" alt="MONEI"> | [monei.com](https://monei.com) |
-| Comercia Global Payments | <img src="https://www.google.com/s2/favicons?domain=comerciaglobalpayments.com&sz=64" width="32" alt="Comercia Global Payments"> | [comerciaglobalpayments.com](https://www.comerciaglobalpayments.com) |
-| Mollie | <img src="https://www.google.com/s2/favicons?domain=mollie.com&sz=64" width="32" alt="Mollie"> | [mollie.com](https://www.mollie.com) |
-| Worldline | <img src="https://www.google.com/s2/favicons?domain=worldline.com&sz=64" width="32" alt="Worldline"> | [worldline.com](https://worldline.com) |
-
-### 🇬🇧 United Kingdom
-
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Worldpay | <img src="https://www.google.com/s2/favicons?domain=worldpay.com&sz=64" width="32" alt="Worldpay"> | [worldpay.com](https://www.worldpay.com) |
-| Opayo | <img src="https://www.google.com/s2/favicons?domain=opayo.co.uk&sz=64" width="32" alt="Opayo"> | [opayo.co.uk](https://www.opayo.co.uk) |
-| Checkout.com | <img src="https://www.google.com/s2/favicons?domain=checkout.com&sz=64" width="32" alt="Checkout.com"> | [checkout.com](https://www.checkout.com) |
-| GoCardless | <img src="https://www.google.com/s2/favicons?domain=gocardless.com&sz=64" width="32" alt="GoCardless"> | [gocardless.com](https://gocardless.com) |
-| Mollie | <img src="https://www.google.com/s2/favicons?domain=mollie.com&sz=64" width="32" alt="Mollie"> | [mollie.com](https://www.mollie.com) |
-| SumUp | <img src="https://www.google.com/s2/favicons?domain=sumup.com&sz=64" width="32" alt="SumUp"> | [sumup.com](https://www.sumup.com) |
-
-### 🇨🇦 Canada
-
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Moneris | <img src="https://www.google.com/s2/favicons?domain=moneris.com&sz=64" width="32" alt="Moneris"> | [moneris.com](https://www.moneris.com) |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Chase Payment Solutions | <img src="https://www.google.com/s2/favicons?domain=chase.ca&sz=64" width="32" alt="Chase"> | [chase.ca](https://www.chase.ca) |
-| Helcim | <img src="https://www.google.com/s2/favicons?domain=helcim.com&sz=64" width="32" alt="Helcim"> | [helcim.com](https://www.helcim.com) |
-| Square | <img src="https://www.google.com/s2/favicons?domain=squareup.com&sz=64" width="32" alt="Square"> | [squareup.com](https://squareup.com) |
-| Global Payments | <img src="https://www.google.com/s2/favicons?domain=globalpayments.com&sz=64" width="32" alt="Global Payments"> | [globalpayments.com](https://www.globalpayments.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-
-### 🇸🇬 Singapore
-
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| HitPay | <img src="https://www.google.com/s2/favicons?domain=hitpayapp.com&sz=64" width="32" alt="HitPay"> | [hitpayapp.com](https://hitpayapp.com) |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| Airwallex | <img src="https://www.google.com/s2/favicons?domain=airwallex.com&sz=64" width="32" alt="Airwallex"> | [airwallex.com](https://www.airwallex.com) |
-| Xendit | <img src="https://www.google.com/s2/favicons?domain=xendit.co&sz=64" width="32" alt="Xendit"> | [xendit.co](https://www.xendit.co) |
-| Checkout.com | <img src="https://www.google.com/s2/favicons?domain=checkout.com&sz=64" width="32" alt="Checkout.com"> | [checkout.com](https://www.checkout.com) |
-
-### 🇦🇪 United Arab Emirates
-
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Network International | <img src="https://www.google.com/s2/favicons?domain=network.ae&sz=64" width="32" alt="Network International"> | [network.ae](https://www.network.ae) |
-| Telr | <img src="https://www.google.com/s2/favicons?domain=telr.com&sz=64" width="32" alt="Telr"> | [telr.com](https://telr.com) |
-| PayTabs | <img src="https://www.google.com/s2/favicons?domain=paytabs.com&sz=64" width="32" alt="PayTabs"> | [paytabs.com](https://paytabs.com) |
-| Checkout.com | <img src="https://www.google.com/s2/favicons?domain=checkout.com&sz=64" width="32" alt="Checkout.com"> | [checkout.com](https://www.checkout.com) |
-| Amazon Payment Services | <img src="https://www.google.com/s2/favicons?domain=paymentservices.amazon.com&sz=64" width="32" alt="Amazon Payment Services"> | [paymentservices.amazon.com](https://paymentservices.amazon.com) |
-| Tap Payments | <img src="https://www.google.com/s2/favicons?domain=tappayments.com&sz=64" width="32" alt="Tap Payments"> | [tappayments.com](https://www.tappayments.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-
-### 🇧🇷 Brazil
-
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Mercado Pago | <img src="https://www.google.com/s2/favicons?domain=mercadopago.com.br&sz=64" width="32" alt="Mercado Pago"> | [mercadopago.com.br](https://www.mercadopago.com.br) |
-| PagSeguro | <img src="https://www.google.com/s2/favicons?domain=pags.com.br&sz=64" width="32" alt="PagSeguro"> | [pagseguro.uol.com.br](https://pagseguro.uol.com.br) |
-| Pagar.me | <img src="https://www.google.com/s2/favicons?domain=pagar.me&sz=64" width="32" alt="Pagar.me"> | [pagar.me](https://pagar.me) |
-| Cielo | <img src="https://www.google.com/s2/favicons?domain=cielo.com.br&sz=64" width="32" alt="Cielo"> | [cielo.com.br](https://www.cielo.com.br) |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-
-### 🇯🇵 Japan
-
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| GMO Payment Gateway | <img src="https://www.google.com/s2/favicons?domain=gmo-pg.com&sz=64" width="32" alt="GMO Payment Gateway"> | [gmo-pg.com](https://www.gmo-pg.com) |
-| SB Payment Service | <img src="https://www.google.com/s2/favicons?domain=sbpayment.jp&sz=64" width="32" alt="SB Payment Service"> | [sbpayment.jp](https://www.sbpayment.jp) |
-| Stripe | <img src="https://www.google.com/s2/favicons?domain=stripe.com&sz=64" width="32" alt="Stripe"> | [stripe.com](https://stripe.com) |
-| PayPal | <img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" width="32" alt="PayPal"> | [paypal.com](https://www.paypal.com) |
-| Adyen | <img src="https://www.google.com/s2/favicons?domain=adyen.com&sz=64" width="32" alt="Adyen"> | [adyen.com](https://www.adyen.com) |
-| Checkout.com | <img src="https://www.google.com/s2/favicons?domain=checkout.com&sz=64" width="32" alt="Checkout.com"> | [checkout.com](https://www.checkout.com) |
-
-### 🇮🇳 India
-
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| Razorpay | <img src="https://www.google.com/s2/favicons?domain=razorpay.com&sz=64" width="32" alt="Razorpay"> | [razorpay.com](https://razorpay.com) |
-| Cashfree Payments | <img src="https://www.google.com/s2/favicons?domain=cashfree.com&sz=64" width="32" alt="Cashfree"> | [cashfree.com](https://www.cashfree.com) |
-| PayU | <img src="https://www.google.com/s2/favicons?domain=payu.com&sz=64" width="32" alt="PayU"> | [payu.com](https://payu.com) |
-| CCAvenue | <img src="https://www.google.com/s2/favicons?domain=ccavenue.com&sz=64" width="32" alt="CCAvenue"> | [ccavenue.com](https://www.ccavenue.com) |
-| BillDesk | <img src="https://www.google.com/s2/favicons?domain=billdesk.com&sz=64" width="32" alt="BillDesk"> | [billdesk.com](https://www.billdesk.com) |
-| PhonePe Payment Gateway | <img src="https://www.google.com/s2/favicons?domain=phonepe.com&sz=64" width="32" alt="PhonePe"> | [phonepe.com](https://www.phonepe.com) |
-| Paytm | <img src="https://www.google.com/s2/favicons?domain=paytm.com&sz=64" width="32" alt="Paytm"> | [paytm.com](https://paytm.com) |
-| Juspay | <img src="https://www.google.com/s2/favicons?domain=juspay.io&sz=64" width="32" alt="Juspay"> | [juspay.io](https://juspay.io) |
-
-## 🌐 Selected Global Payment Providers
-
-These providers operate across multiple markets, subject to country-specific eligibility and product availability.
-
-| **Payment Provider** | **Logo** | **Official Website** |
-| -------------------- | ---------- | ---------------------- |
-| 2Checkout / Verifone | <img src="https://www.google.com/s2/favicons?domain=verifone.com&sz=64" width="32" alt="Verifone"> | [verifone.com](https://www.verifone.com) |
-| BlueSnap | <img src="https://www.google.com/s2/favicons?domain=bluesnap.com&sz=64" width="32" alt="BlueSnap"> | [bluesnap.com](https://www.bluesnap.com) |
-| Nuvei | <img src="https://www.google.com/s2/favicons?domain=nuvei.com&sz=64" width="32" alt="Nuvei"> | [nuvei.com](https://www.nuvei.com) |
-| Cybersource | <img src="https://www.google.com/s2/favicons?domain=cybersource.com&sz=64" width="32" alt="Cybersource"> | [cybersource.com](https://www.cybersource.com) |
-| Global Payments | <img src="https://www.google.com/s2/favicons?domain=globalpayments.com&sz=64" width="32" alt="Global Payments"> | [globalpayments.com](https://www.globalpayments.com) |
-| Fiserv | <img src="https://www.google.com/s2/favicons?domain=fiserv.com&sz=64" width="32" alt="Fiserv"> | [fiserv.com](https://www.fiserv.com) |
-
-## 💻 Technology Stack
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=php,laravel,nodejs,express,react,nextjs,vue,ts,js,python,django,java,spring,mysql,postgres,mongodb,redis,git,github,docker,aws" alt="Technology stack icons" />
-</p>
-
-**Integration approaches:** REST APIs, hosted checkout, embedded components, SDKs, webhooks, and provider plugins.
-
-## 🔄 Typical Integration Workflow
-
-1. **Requirements:** Confirm business country, currency, customer locations, platform, and required payment methods.
-2. **Provider selection:** Check merchant eligibility, pricing, settlement timing, supported methods, and documentation.
-3. **Account setup:** Create the merchant account and obtain sandbox credentials.
-4. **Backend integration:** Create payment sessions or intents securely on the server.
-5. **Checkout UI:** Connect the frontend to the provider's hosted or embedded checkout.
-6. **Webhook verification:** Verify signatures and use idempotent processing for payment events.
-7. **Testing:** Test success, decline, cancellation, timeout, duplicate webhook, refund, and dispute scenarios.
-8. **Production launch:** Configure production credentials, HTTPS, monitoring, and support procedures.
-
-## 🔐 Security Checklist
-
-- Never expose secret API keys in frontend code or public repositories.
-- Store credentials in environment variables or a managed secrets service.
-- Use HTTPS for checkout and webhook endpoints.
-- Verify webhook signatures according to the provider's documentation.
-- Verify payment status server-side before fulfilling an order.
-- Use idempotency keys where supported to prevent duplicate transactions.
-- Do not store raw card numbers or CVV values unless explicitly authorized and compliant with applicable standards.
-- Follow PCI DSS requirements and relevant privacy/data-protection laws.
-- Keep SDKs, dependencies, and server frameworks up to date.
-- Use sandbox/test credentials for development and testing.
-
-## ⚙️ Example Environment Variables
-
-Use the names required by your chosen provider. This is a generic example only:
-
-```env
-PAYMENT_PROVIDER=your_provider
-PAYMENT_PUBLIC_KEY=your_public_key
-PAYMENT_SECRET_KEY=your_secret_key
-PAYMENT_WEBHOOK_SECRET=your_webhook_secret
-PAYMENT_ENVIRONMENT=sandbox
+```text
+ERP / POS / Accounting / eCommerce / SaaS
+                    |
+                    v
+          Unified Tax Integration API
+                    |
+                    v
+      Tax Calculation and Data Validation
+                    |
+                    v
+        Country / Jurisdiction Router
+                    |
+          +---------+---------+
+          |         |         |
+          v         v         v
+       Tax API   E-Invoice   Payment
+       / Portal   Network    Channel
+          |         |         |
+          +---------+---------+
+                    |
+                    v
+       Response, Status and Reconciliation
+                    |
+                    v
+         Audit Logs and Document Archive
 ```
 
-**Never commit real credentials to GitHub.** Add `.env` files to `.gitignore` and provide a safe `.env.example` with placeholder values.
+## Recommended Technology Stack
 
-## 📚 Useful Resources
-
-- [Stripe global availability](https://stripe.com/global)
-- [Stripe API documentation](https://docs.stripe.com/api)
-- [PayPal Developer](https://developer.paypal.com/)
-- [Adyen documentation](https://docs.adyen.com/)
-- [Mollie documentation](https://docs.mollie.com/)
-- [Checkout.com documentation](https://www.checkout.com/docs)
-- [Worldline developer resources](https://developer.worldline.com/)
-- [State Bank of Pakistan](https://www.sbp.org.pk/)
-
-For any other provider, use its official developer portal and current merchant terms.
-
-## 🗃️ Recommended Master Database Fields
-
-When expanding this directory into a searchable database, keep provider details separate from country-specific availability.
-
-| **Field** | **Description** |
+| Component | Suggested Technology |
 |---|---|
-| `provider_id` | Stable internal identifier |
-| `provider_name` | Official provider name |
-| `official_website` | Main provider website |
-| `logo_url` | Official logo or favicon URL |
-| `country_code` | ISO 3166-1 alpha-2 country code |
-| `merchant_country_supported` | Whether merchants registered in the country can apply |
-| `customer_country_supported` | Countries where customers can pay |
-| `payment_methods` | Cards, wallets, bank transfer, local methods, etc. |
-| `processing_currencies` | Currencies accepted for payment |
-| `settlement_currencies` | Currencies available for settlement |
-| `integration_types` | API, hosted checkout, SDK, plugin |
-| `recurring_payments` | Supported / unsupported / needs verification |
-| `refunds` | Supported / unsupported / needs verification |
-| `webhooks` | Supported / unsupported / needs verification |
-| `documentation_url` | Official developer documentation |
-| `verification_status` | Verified / needs review |
-| `last_checked` | Date the details were last confirmed |
+| Frontend | React.js / Next.js |
+| Backend | Node.js / Express.js or Java Spring Boot |
+| Database | PostgreSQL |
+| Background processing | Redis / BullMQ or equivalent |
+| API formats | REST, JSON, XML, UBL, country-specific schemas |
+| Authentication | OAuth 2.0 or authority-specific authentication |
+| Document storage | Amazon S3 or compatible secure object storage |
+| Notifications | Webhooks and email |
+| Monitoring | Structured logs, alerts, retries, and error tracking |
 
-## 🤝 Contributing
+## Suggested Database Tables
 
-Contributions are welcome. Before adding or changing a provider:
+| Table | Purpose |
+|---|---|
+| `countries` | Country names, ISO codes, and jurisdiction metadata |
+| `tax_authorities` | Government tax authority details |
+| `tax_portals` | Official online tax portal references |
+| `tax_integrations` | Country/provider integration configuration |
+| `tax_registrations` | Business tax registration data |
+| `tax_rates` | Tax rates by jurisdiction and effective date |
+| `tax_returns` | Tax return workflow metadata, where applicable |
+| `tax_payments` | Payment references and reconciliation status |
+| `tax_receipts` | Receipt and confirmation metadata |
+| `invoices` | Internal invoice records |
+| `einvoice_submissions` | Submission attempts, authority references, and responses |
+| `invoice_documents` | Secure references to XML, PDF, and related documents |
+| `compliance_logs` | Audit events and integration logs |
 
-1. Confirm the official website and developer documentation.
-2. Verify the countries where merchants can register.
-3. Separate merchant availability from customer payment-method availability.
-4. Do not guess supported currencies, fees, or features.
-5. Mark unverified information as `Needs verification`.
-6. Avoid publishing private keys, customer data, or confidential account information.
+## Security and Compliance
+
+- Use official documentation and authorized access methods.
+- Confirm whether a government service offers an API before designing automation around it.
+- Obtain required taxpayer consent, registrations, licenses, and provider authorization.
+- Store API keys, passwords, certificates, and private keys in a secrets manager or encrypted credential store.
+- Never commit production secrets to source control.
+- Enforce tenant isolation and role-based access control.
+- Encrypt sensitive data in transit and at rest.
+- Use idempotency controls and duplicate detection for submissions and payment operations.
+- Keep audit trails and retention policies aligned with applicable law.
+- Separate invoice submission status from tax payment status.
+- Version country rules, schemas, and integration adapters.
+- Test with official sandboxes or test environments before production use.
+
+## Implementation Checklist
+
+- [ ] Select target countries and business types.
+- [ ] Identify official tax authority systems and supported APIs.
+- [ ] Confirm legal, licensing, and taxpayer eligibility requirements.
+- [ ] Separate payment, filing, tax calculation, and e-invoicing modules.
+- [ ] Implement country-specific validation and formats.
+- [ ] Configure authentication and secret management.
+- [ ] Implement retries, idempotency, and error handling.
+- [ ] Store authority responses and reconciliation references.
+- [ ] Test against official documentation and sandbox environments.
+- [ ] Review current legal requirements and deadlines before launch.
+
+## Important Disclaimer
+
+This README is a technical starting directory, not legal or tax advice and not a guarantee that every listed portal offers a public API, automated payment capability, or mandatory e-invoicing service. Government systems, country coverage, rules, and deadlines can change. Verify the current official documentation and obtain qualified local advice before production deployment.
+
 ---
-<div align="center">
 
-**Built for developers and businesses by GEROW TECH LLC**
-
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-Chat%20with%20us-25D366?logo=whatsapp&logoColor=white)](https://wa.me/923215348101) [![Visit Website](https://img.shields.io/badge/Visit-Website-0A66C2?logo=googlechrome&logoColor=white)](https://www.gerowtech.com)
-
-</div>
+**Maintained by:** GEROW TECH  
+**Project:** Global Online Tax Integration  
+**Scope:** Online Tax Payment, Electronic Tax Filing, Tax Reporting, and E-Invoicing
