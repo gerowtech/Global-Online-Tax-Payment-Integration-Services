@@ -4,6 +4,95 @@ A PHP cURL example for integrating with Pakistan's Federal Board of Revenue (FBR
 
 > **Important:** API endpoints, payload schemas, reference values, credentials, and integration requirements can change. Confirm the current specification and your authorized integration configuration with FBR/PRAL before testing or deploying. The payload below is an illustrative template, not a guaranteed production-ready invoice.
 
+## Top Countries — Digital Invoicing API Examples (PHP)
+
+This project is intended as a country-by-country reference for integrating PHP applications with tax authority platforms and electronic invoicing networks. **There is no single universal government API:** each jurisdiction has its own protocol, schema, authentication method, and onboarding rules. Confirm the current official technical documentation before implementing an adapter.
+
+### Country and API Overview
+
+| Country / Region | Platform / Authority | Typical Integration Style | Official Documentation |
+|---|---|---|---|
+| Pakistan | FBR Digital Invoicing / PRAL | JSON REST API with Bearer token | [FBR Digital Invoicing API](https://www.fbr.gov.pk/technical-documentation-di/163085/173959) |
+| Spain | AEAT VERI*FACTU | SOAP/XML web services; schema and certificate requirements apply | [AEAT VERI*FACTU Technical Information](https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/informacion-tecnica.html) |
+| India | GST e-Invoice / Invoice Registration Portal (IRP) | JSON APIs; authorized registration and authentication required | [GST e-Invoice API Integration](https://einvoice6.gst.gov.in/content/api-integration/) |
+| Egypt | Egyptian Tax Authority (ETA) eInvoicing/eReceipt | API/SDK integration using ETA-defined schemas and authentication | [ETA eInvoicing SDK](https://sdk.invoicing.eta.gov.eg/) |
+| Saudi Arabia | ZATCA e-invoicing (FATOORA) | XML-based invoice compliance and clearance/reporting APIs; cryptographic onboarding requirements apply | [ZATCA Official Portal](https://zatca.gov.sa/en/E-Invoicing/Pages/default.aspx) |
+| Italy | Agenzia delle Entrate — Sistema di Interscambio (SdI) | FatturaPA XML exchanged through supported channels; channel and authentication requirements vary | [Agenzia delle Entrate](https://www.agenziaentrate.gov.it/portale/) |
+| Poland | National e-Invoicing System (KSeF) | Official KSeF API; use current API version and authentication rules | [Polish Ministry of Finance](https://www.podatki.gov.pl/ksef/) |
+| European Union / Peppol countries | Peppol eDelivery network and national requirements | UBL XML exchanged through an accredited/access-point provider; country rules differ | [OpenPeppol](https://peppol.org/) |
+| France | Public invoicing portal / approved platforms | Structured e-invoice formats and platform-based exchange; follow current national rollout requirements | [French Public Finance](https://www.impots.gouv.fr/) |
+| Germany | E-invoicing / national and EU formats | Structured formats such as XRechnung or ZUGFeRD; transmission method depends on transaction and recipient | [German Federal Ministry of Finance](https://www.bundesfinanzministerium.de/) |
+
+**Coverage note:** This table is a practical starting shortlist, not a ranking of market size or a claim that every authority offers a public API to every taxpayer. Some platforms require an approved provider, certificate, registration, or accredited integration channel.
+
+### Suggested PHP Adapter Structure
+
+Keep the application's business logic separate from each country's protocol. For example:
+
+```text
+src/
+└── Invoicing/
+    ├── Contracts/
+    │   └── DigitalInvoicingProvider.php
+    ├── Countries/
+    │   ├── Pakistan/
+    │   │   └── FbrDigitalInvoicing.php
+    │   ├── Spain/
+    │   │   └── AeatVerifactuClient.php
+    │   ├── India/
+    │   │   └── GstEInvoiceClient.php
+    │   ├── Egypt/
+    │   │   └── EtaEInvoiceClient.php
+    │   └── SaudiArabia/
+    │       └── ZatcaEInvoiceClient.php
+    └── DTO/
+        └── InvoiceSubmissionResult.php
+```
+
+A provider interface can normalize your application's workflow without pretending that each government API works the same way:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+interface DigitalInvoicingProvider
+{
+    /**
+     * Validate invoice data locally and/or through the authority,
+     * according to the country's official workflow.
+     */
+    public function validate(array $invoice): array;
+
+    /**
+     * Submit an invoice using the country's official protocol.
+     */
+    public function submit(array $invoice): array;
+
+    /**
+     * Return a normalized status from stored data or an official
+     * status endpoint, where the authority supports one.
+     */
+    public function getStatus(string $reference): array;
+}
+```
+
+Not every jurisdiction offers a separate validation or status endpoint. Each adapter should implement only operations supported by that country's current documentation.
+
+### PHP Integration Checklist for Every Country
+
+1. Read the authority's current developer guide, API specification, WSDL, or XSD.
+2. Confirm whether the connection is REST/JSON, SOAP/XML, Peppol, file exchange, or a provider-mediated integration.
+3. Complete taxpayer registration, integrator onboarding, certificate setup, and sandbox access where required.
+4. Obtain current reference data and validate the invoice against the country's required schema.
+5. Implement authentication, TLS verification, timeouts, response parsing, and safe retry handling.
+6. Save authority reference numbers, submission state, timestamps, and required audit information.
+7. Prevent duplicate submissions; after a timeout, check the status before retrying when the platform supports it.
+8. Test accepted, rejected, partially accepted, and malformed invoice cases in the official test environment.
+9. Keep credentials and private keys server-side and redact sensitive information from logs.
+10. Recheck the official rules before production releases because schemas, endpoints, and mandates can change.
+
+
 ## Official Documentation
 
 - [FBR Digital Invoicing Technical Documentation](https://www.fbr.gov.pk/technical-documentation-di/163085/173959)
