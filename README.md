@@ -1,358 +1,222 @@
-# Digital Invoicing API — PHP SOAP/XML Request and Response Examples
+# Digital Invoicing API — PHP Examples
 
-This repository documents digital invoicing integration patterns for Pakistan, Spain, Egypt, Saudi Arabia, Italy, Poland, European Union / Peppol, France, and Germany.
+A PHP integration reference for digital invoicing, electronic invoice validation, submission, and tax compliance across multiple countries.
 
-> **Important:** These countries do not all use SOAP/XML for digital invoicing. Depending on the country and platform, integrations may use REST/JSON APIs, SOAP web services, structured XML files, or a service-provider network. The XML examples below are illustrative templates, not guaranteed production-ready payloads. Always use the current official endpoint, schema, authentication method, and technical specification.
+**Developed by GEROW TECH LLC**
 
 ## Supported Countries and Platforms
 
-| Country / Region | Authority / Platform | Common format or integration pattern |
+| Country / Region | Authority / Platform | Integration notes |
 |---|---|---|
-| Pakistan | FBR / PRAL Digital Invoicing | Commonly REST/JSON API |
-| Spain | AEAT VERI*FACTU | Structured invoice records; follow the applicable AEAT interface and specification |
-| Egypt | Egyptian Tax Authority (ETA) | Structured e-invoice data and API/SDK integration |
-| Saudi Arabia | ZATCA FATOORA | UBL-based XML and country-specific clearance/reporting APIs |
-| Italy | Sistema di Interscambio (SdI) | FatturaPA XML and approved submission channels |
-| Poland | KSeF | Structured e-invoice schema and KSeF APIs |
-| European Union / Peppol | Peppol eDelivery network | UBL invoice documents via a Peppol access point |
-| France | French electronic invoicing framework | Structured formats and platform-based exchange |
-| Germany | XRechnung / ZUGFeRD | Structured e-invoice formats and recipient-specific delivery channels |
+| 🇵🇰 Pakistan | FBR / PRAL Digital Invoicing | Commonly REST/JSON; use authorized API endpoints and token authentication |
+| 🇪🇸 Spain | AEAT VERI*FACTU | Follow AEAT invoice-record specifications and applicable service interface |
+| 🇪🇬 Egypt | Egyptian Tax Authority (ETA) | Structured e-invoice data and API/SDK integration |
+| 🇸🇦 Saudi Arabia | ZATCA FATOORA | UBL-based XML, cryptographic controls, and clearance/reporting APIs |
+| 🇮🇹 Italy | Sistema di Interscambio (SdI) | FatturaPA XML and approved submission channels |
+| 🇵🇱 Poland | KSeF | Structured invoice schema and KSeF APIs |
+| 🇪🇺 European Union | Peppol | UBL invoice documents exchanged through a Peppol access point |
+| 🇫🇷 France | Electronic invoicing platforms | Structured invoice formats and platform-based exchange |
+| 🇩🇪 Germany | XRechnung / ZUGFeRD | Structured e-invoice formats and recipient-specific delivery channels |
 
----
+## Digital Invoicing API PHP Examples
 
-## 1. Pakistan — FBR Digital Invoicing
+This project provides PHP examples for integrating with digital invoicing platforms across the countries and regions listed above. It includes illustrative API requests and responses, JSON and SOAP/XML patterns, cURL integration, and country-specific implementation notes.
 
-**Authority:** Federal Board of Revenue (FBR) / PRAL
+**Project scope:**
+- PHP API request and response examples
+- JSON and XML payload examples
+- REST API and SOAP/XML integration patterns where supported
+- Invoice validation and submission workflow guidance
+- Authentication, error handling, and security recommendations
+- Links to official technical documentation
 
-Pakistan's digital invoicing integration commonly uses REST APIs with JSON and Bearer-token authentication. The XML below is a generic illustration only; it is **not** an official FBR request format.
+> Examples are illustrative unless explicitly stated otherwise. Always use each provider's current official API specification, schemas, endpoints, and authentication requirements in production.
 
-### Illustrative XML Request
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceRequest>
-    <InvoiceNumber>PK-INV-1001</InvoiceNumber>
-    <InvoiceDate>2026-10-26</InvoiceDate>
-    <SellerNTN>YOUR_SELLER_NTN</SellerNTN>
-    <BuyerNTN>BUYER_NTN</BuyerNTN>
-    <TaxableAmount>10000.00</TaxableAmount>
-    <SalesTax>1800.00</SalesTax>
-    <TotalAmount>11800.00</TotalAmount>
-</InvoiceRequest>
+> **Important:** These platforms do not all use SOAP/XML APIs. Depending on the country and platform, integrations may use REST/JSON, SOAP web services, structured XML files, or a service-provider network. Examples in this repository are illustrative unless explicitly identified as official schema-compliant payloads. Always follow current official documentation.
+
+## Features
+
+- PHP examples for invoice integration workflows
+- Illustrative request and response structures
+- XML and JSON integration patterns
+- cURL-based HTTP requests
+- API authentication placeholders
+- Error handling and response inspection
+- Country-specific implementation notes
+- Official documentation links
+
+## Requirements
+
+- PHP 8.0 or later recommended
+- PHP cURL extension enabled
+- Sandbox credentials for the selected provider
+- Current official API documentation and schemas
+- Client certificates where required by the provider
+
+Check PHP and cURL:
+
+```bash
+php -v
+php -m
 ```
 
-### Illustrative XML Response
+## Suggested Project Structure
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceResponse>
-    <Status>Valid</Status>
-    <InvoiceReference>DEMO-PK-1001</InvoiceReference>
-    <Message>Illustrative response only</Message>
-</InvoiceResponse>
+```text
+digital-invoicing-api-php/
+├── README.md
+├── examples/
+│   ├── pakistan-fbr/
+│   │   ├── validate-invoice.php
+│   │   └── submit-invoice.php
+│   ├── spain-verifactu/
+│   │   ├── invoice-request.xml
+│   │   └── submit-record.php
+│   ├── egypt-eta/
+│   ├── saudi-zatca/
+│   ├── italy-sdi/
+│   ├── poland-ksef/
+│   ├── eu-peppol/
+│   ├── france-einvoicing/
+│   └── germany-xrechnung/
+├── src/
+│   ├── HttpClient.php
+│   └── InvoiceProviderInterface.php
+├── config/
+│   └── config.example.php
+└── .gitignore
 ```
 
-**Production note:** Use the official FBR/PRAL REST/JSON request format, authentication, and authorized validation/submission endpoints. Do not send this illustrative XML to a standard FBR REST endpoint.
+## Shared PHP cURL Client Example
 
----
+This generic helper sends a request to an HTTP API. Configure the endpoint, authentication, headers, and body according to the selected provider's official specification.
 
-## 2. Spain — AEAT VERI*FACTU
+```php
+<?php
 
-**Authority:** Agencia Estatal de Administración Tributaria (AEAT)
+declare(strict_types=1);
 
-VERI*FACTU concerns compliant invoicing software and structured invoice-record reporting. The actual interface and payload must follow the current AEAT technical specifications. The following XML is a placeholder, not an official AEAT payload.
+/**
+ * Send an HTTP request to an invoicing API.
+ *
+ * Do not hard-code real credentials in source code.
+ */
+function sendApiRequest(
+    string $url,
+    string $method,
+    array $headers = [],
+    ?string $body = null
+): array {
+    $ch = curl_init($url);
 
-### Illustrative XML Request
+    curl_setopt_array($ch, [
+        CURLOPT_CUSTOMREQUEST => strtoupper($method),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_POSTFIELDS => $body,
+        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_TIMEOUT => 30,
+    ]);
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceRecordRequest>
-    <InvoiceNumber>ES-INV-1001</InvoiceNumber>
-    <InvoiceDate>26-10-2026</InvoiceDate>
-    <IssuerName>Example Company</IssuerName>
-    <TaxBase>10000.00</TaxBase>
-    <VATAmount>2100.00</VATAmount>
-</InvoiceRecordRequest>
+    $responseBody = curl_exec($ch);
+    $httpStatus = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    if ($responseBody === false) {
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        return [
+            'http_status' => 0,
+            'error' => $error,
+            'body' => null,
+        ];
+    }
+
+    curl_close($ch);
+
+    return [
+        'http_status' => $httpStatus,
+        'error' => null,
+        'body' => $responseBody,
+    ];
+}
 ```
 
-### Illustrative XML Response
+## Example: JSON API Request
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceRecordResponse>
-    <Status>Accepted</Status>
-    <InvoiceNumber>ES-INV-1001</InvoiceNumber>
-    <Message>Illustrative response only</Message>
-</InvoiceRecordResponse>
+This demonstrates the general pattern for a REST/JSON API. The URL, fields, token, and response schema are placeholders; this is not a universal payload for all countries.
+
+```php
+<?php
+
+$apiUrl = 'https://api.example.com/invoices';
+$token = getenv('INVOICING_API_TOKEN') ?: '';
+
+$invoice = [
+    'invoiceNumber' => 'INV-1001',
+    'invoiceDate' => date('Y-m-d'),
+    'currency' => 'EUR',
+    'netAmount' => 100.00,
+    'taxAmount' => 21.00,
+    'totalAmount' => 121.00,
+];
+
+$result = sendApiRequest(
+    $apiUrl,
+    'POST',
+    [
+        'Authorization: Bearer ' . $token,
+        'Content-Type: application/json',
+        'Accept: application/json',
+    ],
+    json_encode($invoice, JSON_THROW_ON_ERROR)
+);
+
+echo 'HTTP status: ' . $result['http_status'] . PHP_EOL;
+echo $result['body'] ?? ($result['error'] ?? 'No response');
 ```
 
-**Production note:** Use the current WSDL/XSD or other applicable official interface, required namespaces, invoice-record fields, hash-chain rules, authentication, and response schema.
+### Illustrative JSON Request
 
----
-
-## 3. Egypt — ETA eInvoicing
-
-**Authority:** Egyptian Tax Authority (ETA)
-
-Egypt's eInvoicing system uses structured invoice data and API-based integration. Confirm the current API version, document format, and authentication requirements with ETA documentation.
-
-### Illustrative XML Request
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceSubmission>
-    <InternalID>EG-INV-1001</InternalID>
-    <IssueDate>2026-10-26</IssueDate>
-    <IssuerTaxID>YOUR_TAX_REGISTRATION_NUMBER</IssuerTaxID>
-    <ReceiverTaxID>BUYER_TAX_REGISTRATION_NUMBER</ReceiverTaxID>
-    <NetAmount>10000.00</NetAmount>
-    <TaxAmount>1400.00</TaxAmount>
-    <TotalAmount>11400.00</TotalAmount>
-</InvoiceSubmission>
+```json
+{
+  "invoiceNumber": "INV-1001",
+  "invoiceDate": "2026-10-26",
+  "currency": "EUR",
+  "netAmount": 100.00,
+  "taxAmount": 21.00,
+  "totalAmount": 121.00
+}
 ```
 
-### Illustrative XML Response
+### Illustrative JSON Response
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceSubmissionResponse>
-    <Status>Submitted</Status>
-    <SubmissionReference>DEMO-EG-1001</SubmissionReference>
-    <Message>Illustrative response only</Message>
-</InvoiceSubmissionResponse>
+```json
+{
+  "status": "accepted",
+  "invoiceNumber": "INV-1001",
+  "reference": "DEMO-REFERENCE-1001",
+  "message": "Illustrative response only"
+}
 ```
 
-**Production note:** ETA integrations may use REST/JSON and platform-specific document formats rather than SOAP. Follow the official API and SDK documentation.
+## Example: SOAP/XML Request Pattern
 
----
-
-## 4. Saudi Arabia — ZATCA FATOORA
-
-**Authority:** Zakat, Tax and Customs Authority (ZATCA)
-
-Saudi Arabia's e-invoicing requirements use structured XML invoices and defined cryptographic and compliance controls. Clearance and reporting workflows vary by invoice type.
-
-### Illustrative XML Request
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<Invoice>
-    <InvoiceNumber>SA-INV-1001</InvoiceNumber>
-    <IssueDate>2026-10-26</IssueDate>
-    <SellerTaxNumber>YOUR_VAT_NUMBER</SellerTaxNumber>
-    <BuyerName>Example Customer</BuyerName>
-    <TaxableAmount>10000.00</TaxableAmount>
-    <VATAmount>1500.00</VATAmount>
-    <PayableAmount>11500.00</PayableAmount>
-</Invoice>
-```
-
-### Illustrative XML Response
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceProcessingResponse>
-    <Status>Accepted</Status>
-    <InvoiceReference>DEMO-SA-1001</InvoiceReference>
-    <Message>Illustrative response only</Message>
-</InvoiceProcessingResponse>
-```
-
-**Production note:** This is not a ZATCA-compliant invoice document. Production implementations must follow the applicable UBL XML specification, security requirements, cryptographic controls, and clearance/reporting APIs.
-
----
-
-## 5. Italy — Sistema di Interscambio (SdI)
-
-**Authority:** Agenzia delle Entrate
-
-Italian electronic invoices generally use the FatturaPA XML format and are exchanged through the Sistema di Interscambio (SdI). The example below is generic and is not a FatturaPA schema or an official SOAP request.
-
-### Illustrative XML Request
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceSubmission>
-    <InvoiceNumber>IT-INV-1001</InvoiceNumber>
-    <IssueDate>2026-10-26</IssueDate>
-    <SupplierVAT>YOUR_VAT_NUMBER</SupplierVAT>
-    <CustomerVAT>BUYER_VAT_NUMBER</CustomerVAT>
-    <TaxableAmount>10000.00</TaxableAmount>
-    <VATAmount>2200.00</VATAmount>
-    <TotalAmount>12200.00</TotalAmount>
-</InvoiceSubmission>
-```
-
-### Illustrative XML Response
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceSubmissionResponse>
-    <Status>Received</Status>
-    <InvoiceNumber>IT-INV-1001</InvoiceNumber>
-    <Message>Illustrative response only</Message>
-</InvoiceSubmissionResponse>
-```
-
-**Production note:** Use the official FatturaPA schema and the applicable SdI submission channel or authorized intermediary.
-
----
-
-## 6. Poland — KSeF
-
-**Authority:** Polish Ministry of Finance
-
-KSeF is Poland's national e-invoicing system. Integration requirements, authentication, structured invoice schema, and API versions must be checked against the current official specification.
-
-### Illustrative XML Request
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceSubmission>
-    <InvoiceNumber>PL-INV-1001</InvoiceNumber>
-    <IssueDate>2026-10-26</IssueDate>
-    <SellerTaxID>YOUR_NIP</SellerTaxID>
-    <BuyerTaxID>BUYER_NIP</BuyerTaxID>
-    <NetAmount>10000.00</NetAmount>
-    <VATAmount>2300.00</VATAmount>
-    <GrossAmount>12300.00</GrossAmount>
-</InvoiceSubmission>
-```
-
-### Illustrative XML Response
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceSubmissionResponse>
-    <Status>Accepted</Status>
-    <InvoiceReference>DEMO-PL-1001</InvoiceReference>
-    <Message>Illustrative response only</Message>
-</InvoiceSubmissionResponse>
-```
-
-**Production note:** The sample is not an official KSeF invoice schema. Use the current FA structure, API version, authentication method, and processing-response format specified by the Polish Ministry of Finance.
-
----
-
-## 7. European Union — Peppol
-
-**Network:** Peppol eDelivery network
-
-Peppol supports the exchange of structured business documents, including electronic invoices. Businesses typically connect through a Peppol service provider or access point. Peppol is not a single EU tax-authority SOAP endpoint.
-
-### Illustrative XML Request
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<SubmitInvoiceRequest>
-    <ParticipantID>YOUR_PEPPOL_PARTICIPANT_ID</ParticipantID>
-    <DocumentType>Invoice</DocumentType>
-    <InvoiceNumber>EU-INV-1001</InvoiceNumber>
-    <IssueDate>2026-10-26</IssueDate>
-    <Currency>EUR</Currency>
-    <TaxExclusiveAmount>10000.00</TaxExclusiveAmount>
-    <TaxAmount>2100.00</TaxAmount>
-    <PayableAmount>12100.00</PayableAmount>
-</SubmitInvoiceRequest>
-```
-
-### Illustrative XML Response
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<SubmitInvoiceResponse>
-    <Status>Accepted</Status>
-    <DocumentID>DEMO-EU-1001</DocumentID>
-    <Message>Illustrative response only</Message>
-</SubmitInvoiceResponse>
-```
-
-**Production note:** This is a conceptual example, not a standardized Peppol SOAP operation. Peppol invoices commonly use UBL XML and are exchanged through an access point using the applicable network protocols and specifications.
-
----
-
-## 8. France — Electronic Invoicing
-
-**Authority:** French tax administration and authorized electronic invoicing platforms
-
-France's electronic invoicing framework uses structured electronic documents and platform-based exchange. The required format and submission workflow depend on applicable regulations and the authorized platform.
-
-### Illustrative XML Request
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceSubmission>
-    <InvoiceNumber>FR-INV-1001</InvoiceNumber>
-    <IssueDate>2026-10-26</IssueDate>
-    <SupplierVAT>YOUR_VAT_NUMBER</SupplierVAT>
-    <CustomerVAT>BUYER_VAT_NUMBER</CustomerVAT>
-    <TaxExclusiveAmount>10000.00</TaxExclusiveAmount>
-    <VATAmount>2000.00</VATAmount>
-    <TotalAmount>12000.00</TotalAmount>
-</InvoiceSubmission>
-```
-
-### Illustrative XML Response
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceSubmissionResponse>
-    <Status>Received</Status>
-    <InvoiceNumber>FR-INV-1001</InvoiceNumber>
-    <Message>Illustrative response only</Message>
-</InvoiceSubmissionResponse>
-```
-
-**Production note:** This is not a French tax-authority SOAP request. Implement the format, transport, and platform APIs required by the applicable French electronic invoicing framework.
-
----
-
-## 9. Germany — XRechnung / ZUGFeRD
-
-**Standards:** XRechnung and ZUGFeRD
-
-Germany supports structured electronic invoice formats including XRechnung and ZUGFeRD. The appropriate exchange channel depends on the recipient and use case. Generating a valid invoice file does not itself submit it to a government API.
-
-### Illustrative XML Request
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceSubmission>
-    <InvoiceNumber>DE-INV-1001</InvoiceNumber>
-    <IssueDate>2026-10-26</IssueDate>
-    <SellerTaxID>YOUR_TAX_ID</SellerTaxID>
-    <BuyerReference>BUYER_REFERENCE</BuyerReference>
-    <NetAmount>10000.00</NetAmount>
-    <VATAmount>1900.00</VATAmount>
-    <GrossAmount>11900.00</GrossAmount>
-</InvoiceSubmission>
-```
-
-### Illustrative XML Response
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<InvoiceProcessingResponse>
-    <Status>Received</Status>
-    <InvoiceNumber>DE-INV-1001</InvoiceNumber>
-    <Message>Illustrative response only</Message>
-</InvoiceProcessingResponse>
-```
-
-**Production note:** The sample is not a valid XRechnung or ZUGFeRD invoice. Use the applicable official syntax and business rules, and the recipient's required delivery channel.
-
----
-
-## Shared PHP SOAP/XML Client Pattern
-
-The following PHP cURL example demonstrates sending XML to a SOAP endpoint. Configure it with the real endpoint, SOAP action, credentials, certificates, and XML body required by the target service.
+Use this pattern only for a provider that officially exposes a SOAP service. The XML body, namespaces, SOAP action, certificate requirements, and response schema must match that provider's WSDL/XSD.
 
 ```php
 <?php
 
 $endpoint = 'YOUR_OFFICIAL_SOAP_ENDPOINT';
 $soapAction = 'YOUR_DOCUMENTED_SOAP_ACTION';
-$xmlRequest = '<ReplaceWithOfficialSchemaCompliantRequest/>';
+
+$xmlRequest = <<<'XML'
+<?xml version="1.0" encoding="UTF-8"?>
+<ReplaceWithOfficialRequestRoot>
+    <!-- Insert fields defined by the provider's official XSD. -->
+</ReplaceWithOfficialRequestRoot>
+XML;
 
 $ch = curl_init($endpoint);
 
@@ -361,37 +225,141 @@ curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_HTTPHEADER => [
         'Content-Type: text/xml; charset=UTF-8',
-        'SOAPAction: "' . $soapAction . '"'
+        'SOAPAction: "' . $soapAction . '"',
     ],
     CURLOPT_POSTFIELDS => $xmlRequest,
     CURLOPT_CONNECTTIMEOUT => 10,
-    CURLOPT_TIMEOUT => 30
+    CURLOPT_TIMEOUT => 30,
 ]);
 
 $response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$httpStatus = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 if ($response === false) {
-    error_log('Request failed: ' . curl_error($ch));
+    error_log('SOAP request failed: ' . curl_error($ch));
 } else {
-    echo 'HTTP Status: ' . $httpCode . PHP_EOL;
+    echo 'HTTP status: ' . $httpStatus . PHP_EOL;
     echo $response;
 }
 
 curl_close($ch);
 ```
 
-### Integration Checklist
+### Illustrative XML Request
 
-- Use the correct country-specific API or document-exchange protocol.
-- Validate XML against the official schema before sending.
-- Implement the required authentication and certificate handling.
-- Keep credentials and private keys outside source control.
-- Handle HTTP errors, SOAP faults, and business-validation errors separately.
-- Store submission references and invoice status securely.
-- Test against the official sandbox or test environment before production.
-- Label demonstration requests and responses as illustrative.
-- Do not treat an HTTP success alone as proof that a tax invoice was accepted.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<InvoiceRequest>
+    <InvoiceNumber>INV-1001</InvoiceNumber>
+    <IssueDate>2026-10-26</IssueDate>
+    <NetAmount>100.00</NetAmount>
+    <TaxAmount>21.00</TaxAmount>
+    <TotalAmount>121.00</TotalAmount>
+</InvoiceRequest>
+```
+
+### Illustrative XML Response
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<InvoiceResponse>
+    <Status>Accepted</Status>
+    <InvoiceNumber>INV-1001</InvoiceNumber>
+    <Reference>DEMO-REFERENCE-1001</Reference>
+    <Message>Illustrative response only</Message>
+</InvoiceResponse>
+```
+
+The XML above is generic demonstration content, not an official schema for any country listed in this repository.
+
+## Country-Specific Notes
+
+### Pakistan — FBR / PRAL
+
+- FBR/PRAL digital invoicing integrations commonly use REST/JSON APIs.
+- Use the authorized API base URL, Bearer token, and required validation/submission endpoints supplied for your integration.
+- Validate seller/buyer registration details, HS codes, tax rates, invoice type, and required scenario values.
+- Do not send generic SOAP/XML examples to a REST/JSON endpoint.
+
+Official website: https://www.fbr.gov.pk/
+
+### Spain — AEAT VERI*FACTU
+
+- Follow the current AEAT VERI*FACTU technical specifications.
+- Invoice-record reporting requirements may include specific fields, hashes, and record-linking rules.
+- Use the applicable official service interface, namespaces, schemas, and authentication.
+- A generic XML envelope is not a valid VERI*FACTU submission.
+
+Official website: https://sede.agenciatributaria.gob.es/
+
+### Egypt — ETA eInvoicing
+
+- Check the current ETA API and SDK documentation.
+- Follow the required document structure, authentication, signing, and submission workflow.
+- Do not assume the integration uses SOAP/XML.
+
+Official website: https://www.eta.gov.eg/
+
+### Saudi Arabia — ZATCA FATOORA
+
+- Follow the applicable ZATCA e-invoicing XML/UBL specifications.
+- Implement the required cryptographic controls and clearance/reporting workflow for the invoice type.
+- A generic XML invoice is not a compliant ZATCA invoice.
+
+Official website: https://zatca.gov.sa/
+
+### Italy — SdI
+
+- Use the official FatturaPA XML format and applicable SdI submission channel or authorized intermediary.
+- A generic SOAP request is not a FatturaPA invoice.
+
+Official website: https://www.agenziaentrate.gov.it/
+
+### Poland — KSeF
+
+- Follow the current KSeF API version, structured invoice schema, authentication requirements, and processing response format.
+
+Official website: https://ksef.podatki.gov.pl/
+
+### European Union — Peppol
+
+- Peppol is a document-exchange network, not one EU tax-authority SOAP endpoint.
+- Invoices commonly use UBL and are exchanged through a Peppol access point.
+- Use the access point provider's documented API and the applicable Peppol specifications.
+
+Official website: https://peppol.org/
+
+### France — Electronic Invoicing
+
+- Follow current French electronic invoicing requirements and the selected authorized platform's technical interface.
+- Formats, routing, and API details depend on the platform and applicable regulations.
+
+Official website: https://www.impots.gouv.fr/
+
+### Germany — XRechnung / ZUGFeRD
+
+- Follow the applicable XRechnung or ZUGFeRD specification and recipient delivery requirements.
+- Generating an invoice file does not itself submit it to a government API.
+
+Official website: https://www.xrechnung.de/
+
+## Recommended Error Handling
+
+1. Check the HTTP status code and response body.
+2. Parse JSON responses as JSON and XML responses as XML.
+3. Handle authentication, schema-validation, business-rule, and network errors separately.
+4. Save the provider's submission reference and invoice status securely.
+5. Retry only when permitted by the provider; avoid duplicate submissions.
+6. Do not treat HTTP success alone as proof that an invoice has been accepted by the tax authority.
+
+## Security
+
+- Store tokens, passwords, and private keys in environment variables or a secret manager.
+- Never commit live credentials or private certificates to Git.
+- Use HTTPS and verify TLS certificates.
+- Redact tax identifiers and sensitive invoice data from logs.
+- Use sandbox/test credentials before production.
+- Follow each authority's official documentation and legal requirements.
 
 ## Official Documentation
 
@@ -405,10 +373,14 @@ curl_close($ch);
 - France — Impots.gouv.fr: https://www.impots.gouv.fr/
 - Germany — XRechnung: https://www.xrechnung.de/
 
-## GEROW TECH
+## GEROW TECH LLC
 
 Digital invoicing API integration, PHP development, and multi-country software integration.
 
 - Website: https://gerowtech.com/
 - Email: contact@gerowtech.com
 - WhatsApp: https://wa.me/923215348101
+
+---
+
+**Disclaimer:** This repository is an integration reference, not tax or legal advice. Examples are illustrative unless explicitly documented as conforming to an official specification. Verify the current country-specific technical requirements before using any example in production.
